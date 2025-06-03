@@ -1,0 +1,16 @@
+syntax = "proto3";
+package evops.api.v1;
+
+service EventService {
+  rpc Create(EventServiceCreateRequest) returns (EventServiceCreateResponse);
+}
+
+message EventServiceCreateRequest {
+  string name = 1;
+  string description = 2;
+}
+
+message EventServiceCreateResponse {
+  string name = 1;
+  string description = 2;
+}
