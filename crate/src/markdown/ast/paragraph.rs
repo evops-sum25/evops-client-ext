@@ -1,15 +1,15 @@
 use thiserror::Error;
 
-use self::child::RootChild;
-use crate::unist::Position;
+use self::child::ParagraphChild;
+use crate::markdown::unist::Position;
 
 pub mod child;
 
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
-pub struct Root {
-    pub children: Vec<RootChild>,
+pub struct Paragraph {
+    pub children: Vec<ParagraphChild>,
     pub position: Position,
 }
 
@@ -21,16 +21,16 @@ pub enum ConvertError {
     NoPosition,
 }
 
-impl TryFrom<markdown::mdast::Root> for Root {
+impl TryFrom<markdown::mdast::Paragraph> for Paragraph {
     type Error = ConvertError;
 
-    fn try_from(value: markdown::mdast::Root) -> Result<Self, Self::Error> {
+    fn try_from(value: markdown::mdast::Paragraph) -> Result<Self, Self::Error> {
         Ok(Self {
             children: {
                 value
                     .children
                     .into_iter()
-                    .map(RootChild::try_from)
+                    .map(ParagraphChild::try_from)
                     .collect::<Result<_, _>>()?
             },
             position: value.position.ok_or(ConvertError::NoPosition)?.into(),

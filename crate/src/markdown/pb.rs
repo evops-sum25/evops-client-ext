@@ -1,7 +1,7 @@
 include!(concat!(env!("OUT_DIR"), "/evops.markdown.v1.rs"));
 
-impl From<crate::ast::Root> for self::ParseResponse {
-    fn from(value: crate::ast::Root) -> Self {
+impl From<crate::markdown::ast::Root> for self::ParseResponse {
+    fn from(value: crate::markdown::ast::Root) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
             position: Some(value.position.into()),
@@ -9,8 +9,8 @@ impl From<crate::ast::Root> for self::ParseResponse {
     }
 }
 
-impl From<crate::unist::Point> for self::Point {
-    fn from(value: crate::unist::Point) -> Self {
+impl From<crate::markdown::unist::Point> for self::Point {
+    fn from(value: crate::markdown::unist::Point) -> Self {
         const MSG: &str = "coordinate should fit in u32";
 
         Self {
@@ -21,8 +21,8 @@ impl From<crate::unist::Point> for self::Point {
     }
 }
 
-impl From<crate::unist::Position> for self::Position {
-    fn from(value: crate::unist::Position) -> Self {
+impl From<crate::markdown::unist::Position> for self::Position {
+    fn from(value: crate::markdown::unist::Position) -> Self {
         Self {
             start: Some(value.start.into()),
             end: Some(value.end.into()),
@@ -30,9 +30,9 @@ impl From<crate::unist::Position> for self::Position {
     }
 }
 
-impl From<crate::ast::RootChild> for self::RootChild {
-    fn from(value: crate::ast::RootChild) -> Self {
-        use crate::ast::RootChild as C;
+impl From<crate::markdown::ast::RootChild> for self::RootChild {
+    fn from(value: crate::markdown::ast::RootChild) -> Self {
+        use crate::markdown::ast::RootChild as C;
 
         Self {
             child: Some(match value {
@@ -47,8 +47,8 @@ impl From<crate::ast::RootChild> for self::RootChild {
     }
 }
 
-impl From<crate::ast::Paragraph> for self::Paragraph {
-    fn from(value: crate::ast::Paragraph) -> Self {
+impl From<crate::markdown::ast::Paragraph> for self::Paragraph {
+    fn from(value: crate::markdown::ast::Paragraph) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
             position: Some(value.position.into()),
@@ -56,9 +56,9 @@ impl From<crate::ast::Paragraph> for self::Paragraph {
     }
 }
 
-impl From<crate::ast::ParagraphChild> for self::ParagraphChild {
-    fn from(value: crate::ast::ParagraphChild) -> Self {
-        use crate::ast::ParagraphChild as C;
+impl From<crate::markdown::ast::ParagraphChild> for self::ParagraphChild {
+    fn from(value: crate::markdown::ast::ParagraphChild) -> Self {
+        use crate::markdown::ast::ParagraphChild as C;
 
         Self {
             child: Some(match value {
@@ -73,8 +73,8 @@ impl From<crate::ast::ParagraphChild> for self::ParagraphChild {
     }
 }
 
-impl From<crate::ast::Text> for self::Text {
-    fn from(value: crate::ast::Text) -> Self {
+impl From<crate::markdown::ast::Text> for self::Text {
+    fn from(value: crate::markdown::ast::Text) -> Self {
         Self {
             value: value.value,
             position: Some(value.position.into()),
@@ -82,8 +82,8 @@ impl From<crate::ast::Text> for self::Text {
     }
 }
 
-impl From<crate::ast::Strong> for self::Strong {
-    fn from(value: crate::ast::Strong) -> Self {
+impl From<crate::markdown::ast::Strong> for self::Strong {
+    fn from(value: crate::markdown::ast::Strong) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
             position: Some(value.position.into()),
@@ -91,8 +91,8 @@ impl From<crate::ast::Strong> for self::Strong {
     }
 }
 
-impl From<crate::ast::Emphasis> for self::Emphasis {
-    fn from(value: crate::ast::Emphasis) -> Self {
+impl From<crate::markdown::ast::Emphasis> for self::Emphasis {
+    fn from(value: crate::markdown::ast::Emphasis) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
             position: Some(value.position.into()),
@@ -100,8 +100,8 @@ impl From<crate::ast::Emphasis> for self::Emphasis {
     }
 }
 
-impl From<crate::ast::Delete> for self::Delete {
-    fn from(value: crate::ast::Delete) -> Self {
+impl From<crate::markdown::ast::Delete> for self::Delete {
+    fn from(value: crate::markdown::ast::Delete) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
             position: Some(value.position.into()),
@@ -109,8 +109,8 @@ impl From<crate::ast::Delete> for self::Delete {
     }
 }
 
-impl From<crate::ast::InlineCode> for self::InlineCode {
-    fn from(value: crate::ast::InlineCode) -> Self {
+impl From<crate::markdown::ast::InlineCode> for self::InlineCode {
+    fn from(value: crate::markdown::ast::InlineCode) -> Self {
         Self {
             value: value.value,
             position: Some(value.position.into()),
@@ -118,8 +118,8 @@ impl From<crate::ast::InlineCode> for self::InlineCode {
     }
 }
 
-impl From<crate::ast::Link> for self::Link {
-    fn from(value: crate::ast::Link) -> Self {
+impl From<crate::markdown::ast::Link> for self::Link {
+    fn from(value: crate::markdown::ast::Link) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
             position: Some(value.position.into()),
@@ -128,9 +128,9 @@ impl From<crate::ast::Link> for self::Link {
     }
 }
 
-impl From<crate::ast::LinkChild> for self::LinkChild {
-    fn from(value: crate::ast::LinkChild) -> Self {
-        use crate::ast::LinkChild as C;
+impl From<crate::markdown::ast::LinkChild> for self::LinkChild {
+    fn from(value: crate::markdown::ast::LinkChild) -> Self {
+        use crate::markdown::ast::LinkChild as C;
 
         Self {
             child: Some(match value {
@@ -144,8 +144,8 @@ impl From<crate::ast::LinkChild> for self::LinkChild {
     }
 }
 
-impl From<crate::ast::Heading> for self::Heading {
-    fn from(value: crate::ast::Heading) -> Self {
+impl From<crate::markdown::ast::Heading> for self::Heading {
+    fn from(value: crate::markdown::ast::Heading) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
             position: Some(value.position.into()),
@@ -154,9 +154,9 @@ impl From<crate::ast::Heading> for self::Heading {
     }
 }
 
-impl From<crate::ast::HeadingDepth> for self::HeadingDepth {
-    fn from(value: crate::ast::HeadingDepth) -> Self {
-        use crate::ast::HeadingDepth as D;
+impl From<crate::markdown::ast::HeadingDepth> for self::HeadingDepth {
+    fn from(value: crate::markdown::ast::HeadingDepth) -> Self {
+        use crate::markdown::ast::HeadingDepth as D;
 
         match value {
             D::Level1 => Self::HeadingDepth1,
@@ -169,8 +169,8 @@ impl From<crate::ast::HeadingDepth> for self::HeadingDepth {
     }
 }
 
-impl From<crate::ast::List> for self::List {
-    fn from(value: crate::ast::List) -> Self {
+impl From<crate::markdown::ast::List> for self::List {
+    fn from(value: crate::markdown::ast::List) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
             position: Some(value.position.into()),
@@ -180,8 +180,8 @@ impl From<crate::ast::List> for self::List {
     }
 }
 
-impl From<crate::ast::ListItem> for self::ListItem {
-    fn from(value: crate::ast::ListItem) -> Self {
+impl From<crate::markdown::ast::ListItem> for self::ListItem {
+    fn from(value: crate::markdown::ast::ListItem) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
             position: Some(value.position.into()),
@@ -190,8 +190,8 @@ impl From<crate::ast::ListItem> for self::ListItem {
     }
 }
 
-impl From<crate::ast::Blockquote> for self::Blockquote {
-    fn from(value: crate::ast::Blockquote) -> Self {
+impl From<crate::markdown::ast::Blockquote> for self::Blockquote {
+    fn from(value: crate::markdown::ast::Blockquote) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
             position: Some(value.position.into()),
@@ -199,8 +199,8 @@ impl From<crate::ast::Blockquote> for self::Blockquote {
     }
 }
 
-impl From<crate::ast::Code> for self::Code {
-    fn from(value: crate::ast::Code) -> Self {
+impl From<crate::markdown::ast::Code> for self::Code {
+    fn from(value: crate::markdown::ast::Code) -> Self {
         Self {
             value: value.value,
             position: Some(value.position.into()),
@@ -209,8 +209,8 @@ impl From<crate::ast::Code> for self::Code {
     }
 }
 
-impl From<crate::ast::ThematicBreak> for self::ThematicBreak {
-    fn from(value: crate::ast::ThematicBreak) -> Self {
+impl From<crate::markdown::ast::ThematicBreak> for self::ThematicBreak {
+    fn from(value: crate::markdown::ast::ThematicBreak) -> Self {
         Self {
             position: Some(value.position.into()),
         }

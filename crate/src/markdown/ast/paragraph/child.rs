@@ -3,31 +3,34 @@ use thiserror::Error;
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Enum))]
-pub enum LinkChild {
-    Text(crate::ast::Text),
-    Strong(crate::ast::Strong),
-    Emphasis(crate::ast::Emphasis),
-    Delete(crate::ast::Delete),
-    InlineCode(crate::ast::InlineCode),
+pub enum ParagraphChild {
+    Text(crate::markdown::ast::Text),
+    Strong(crate::markdown::ast::Strong),
+    Emphasis(crate::markdown::ast::Emphasis),
+    Delete(crate::markdown::ast::Delete),
+    InlineCode(crate::markdown::ast::InlineCode),
+    Link(crate::markdown::ast::Link),
 }
 
 #[derive(Error, Debug)]
 pub enum ConvertError {
     #[error("todo")]
-    Text(#[from] crate::ast::text::ConvertError),
+    Text(#[from] crate::markdown::ast::text::ConvertError),
     #[error("todo")]
-    Strong(#[from] crate::ast::strong::ConvertError),
+    Strong(#[from] crate::markdown::ast::strong::ConvertError),
     #[error("todo")]
-    Emphasis(#[from] crate::ast::emphasis::ConvertError),
+    Emphasis(#[from] crate::markdown::ast::emphasis::ConvertError),
     #[error("todo")]
-    Delete(#[from] crate::ast::delete::ConvertError),
+    Delete(#[from] crate::markdown::ast::delete::ConvertError),
     #[error("todo")]
-    InlineCode(#[from] crate::ast::inline_code::ConvertError),
+    InlineCode(#[from] crate::markdown::ast::inline_code::ConvertError),
+    #[error("todo")]
+    Link(#[from] crate::markdown::ast::link::ConvertError),
     #[error("todo")]
     InvalidNode(markdown::mdast::Node),
 }
 
-impl TryFrom<markdown::mdast::Node> for LinkChild {
+impl TryFrom<markdown::mdast::Node> for ParagraphChild {
     type Error = ConvertError;
 
     fn try_from(value: markdown::mdast::Node) -> Result<Self, Self::Error> {
@@ -39,6 +42,7 @@ impl TryFrom<markdown::mdast::Node> for LinkChild {
             N::Emphasis(em) => Self::Emphasis(em.try_into()?),
             N::Delete(del) => Self::Delete(del.try_into()?),
             N::InlineCode(ic) => Self::InlineCode(ic.try_into()?),
+            N::Link(ln) => Self::Link(ln.try_into()?),
             _ => return Err(ConvertError::InvalidNode(value)),
         })
     }

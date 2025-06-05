@@ -4,28 +4,28 @@ use thiserror::Error;
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Enum))]
 pub enum RootChild {
-    Paragraph(crate::ast::Paragraph),
-    Heading(crate::ast::Heading),
-    List(crate::ast::List),
-    Blockquote(crate::ast::Blockquote),
-    Code(crate::ast::Code),
-    ThematicBreak(crate::ast::ThematicBreak),
+    Paragraph(crate::markdown::ast::Paragraph),
+    Heading(crate::markdown::ast::Heading),
+    List(crate::markdown::ast::List),
+    Blockquote(crate::markdown::ast::Blockquote),
+    Code(crate::markdown::ast::Code),
+    ThematicBreak(crate::markdown::ast::ThematicBreak),
 }
 
 #[derive(Error, Debug)]
 pub enum ConvertError {
     #[error("todo")]
-    Paragraph(#[from] crate::ast::paragraph::ConvertError),
+    Paragraph(#[from] crate::markdown::ast::paragraph::ConvertError),
     #[error("todo")]
-    Heading(#[from] crate::ast::heading::ConvertError),
+    Heading(#[from] crate::markdown::ast::heading::ConvertError),
     #[error("todo")]
-    List(#[from] crate::ast::list::ConvertError),
+    List(#[from] crate::markdown::ast::list::ConvertError),
     #[error("todo")]
-    Blockquote(#[from] crate::ast::blockquote::ConvertError),
+    Blockquote(#[from] crate::markdown::ast::blockquote::ConvertError),
     #[error("todo")]
-    Code(#[from] crate::ast::code::ConvertError),
+    Code(#[from] crate::markdown::ast::code::ConvertError),
     #[error("todo")]
-    ThematicBreak(#[from] crate::ast::thematic_break::ConvertError),
+    ThematicBreak(#[from] crate::markdown::ast::thematic_break::ConvertError),
     #[error("todo")]
     InvalidNode(markdown::mdast::Node),
 }

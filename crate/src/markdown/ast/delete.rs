@@ -1,43 +1,38 @@
 use thiserror::Error;
 
-use self::depth::HeadingDepth;
-use crate::ast::ParagraphChild;
-
-pub mod depth;
+use crate::markdown::ast::ParagraphChild;
+use crate::markdown::unist::Position;
 
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
-pub struct Heading {
+pub struct Delete {
     pub children: Vec<ParagraphChild>,
-    pub position: crate::unist::Position,
-    pub depth: HeadingDepth,
+    pub position: Position,
 }
 
 #[derive(Error, Debug)]
 pub enum ConvertError {
     #[error("todo")]
-    Child(#[from] crate::ast::paragraph::child::ConvertError),
-    #[error("todo")]
-    InvalidDepth(#[from] self::depth::ConvertError),
+    Child(#[from] Box<crate::markdown::ast::paragraph::child::ConvertError>),
     #[error("todo")]
     NoPosition,
 }
 
-impl TryFrom<markdown::mdast::Heading> for Heading {
+impl TryFrom<markdown::mdast::Delete> for Delete {
     type Error = ConvertError;
 
-    fn try_from(value: markdown::mdast::Heading) -> Result<Self, Self::Error> {
+    fn try_from(value: markdown::mdast::Delete) -> Result<Self, Self::Error> {
         Ok(Self {
             children: {
                 value
                     .children
                     .into_iter()
                     .map(ParagraphChild::try_from)
-                    .collect::<Result<Vec<_>, _>>()?
+                    .collect::<Result<Vec<_>, _>>()
+                    .map_err(Box::new)?
             },
             position: value.position.ok_or(ConvertError::NoPosition)?.into(),
-            depth: value.depth.try_into()?,
         })
     }
 }

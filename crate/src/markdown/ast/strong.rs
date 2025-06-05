@@ -1,7 +1,7 @@
 use thiserror::Error;
 
-use crate::ast::ParagraphChild;
-use crate::unist::Position;
+use crate::markdown::ast::ParagraphChild;
+use crate::markdown::unist::Position;
 
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
@@ -14,7 +14,7 @@ pub struct Strong {
 #[derive(Error, Debug)]
 pub enum ConvertError {
     #[error("todo")]
-    Child(#[from] Box<crate::ast::paragraph::child::ConvertError>),
+    Child(#[from] Box<crate::markdown::ast::paragraph::child::ConvertError>),
     #[error("todo")]
     NoPosition,
 }

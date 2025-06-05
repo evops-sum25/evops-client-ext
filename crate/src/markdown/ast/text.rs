@@ -1,11 +1,12 @@
 use thiserror::Error;
 
-use crate::unist::Position;
+use crate::markdown::unist::Position;
 
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
-pub struct ThematicBreak {
+pub struct Text {
+    pub value: String,
     pub position: Position,
 }
 
@@ -15,11 +16,12 @@ pub enum ConvertError {
     NoPosition,
 }
 
-impl TryFrom<markdown::mdast::ThematicBreak> for ThematicBreak {
+impl TryFrom<markdown::mdast::Text> for Text {
     type Error = ConvertError;
 
-    fn try_from(value: markdown::mdast::ThematicBreak) -> Result<Self, Self::Error> {
+    fn try_from(value: markdown::mdast::Text) -> Result<Self, Self::Error> {
         Ok(Self {
+            value: value.value,
             position: value.position.ok_or(ConvertError::NoPosition)?.into(),
         })
     }

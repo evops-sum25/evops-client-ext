@@ -1,43 +1,39 @@
 use thiserror::Error;
 
-use self::child::LinkChild;
-use crate::unist::Position;
+use self::child::RootChild;
+use crate::markdown::unist::Position;
 
 pub mod child;
 
 #[derive(Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
-pub struct Link {
-    pub children: Vec<LinkChild>,
+pub struct Root {
+    pub children: Vec<RootChild>,
     pub position: Position,
-    pub url: String,
 }
 
 #[derive(Error, Debug)]
 pub enum ConvertError {
     #[error("todo")]
-    Child(#[from] crate::ast::link::child::ConvertError),
+    Child(#[from] self::child::ConvertError),
     #[error("todo")]
     NoPosition,
 }
 
-impl TryFrom<markdown::mdast::Link> for Link {
+impl TryFrom<markdown::mdast::Root> for Root {
     type Error = ConvertError;
 
-    fn try_from(value: markdown::mdast::Link) -> Result<Self, Self::Error> {
-        // todo: figure out what value.title is
-
+    fn try_from(value: markdown::mdast::Root) -> Result<Self, Self::Error> {
         Ok(Self {
             children: {
                 value
                     .children
                     .into_iter()
-                    .map(LinkChild::try_from)
-                    .collect::<Result<Vec<_>, _>>()?
+                    .map(RootChild::try_from)
+                    .collect::<Result<_, _>>()?
             },
             position: value.position.ok_or(ConvertError::NoPosition)?.into(),
-            url: value.url,
         })
     }
 }
