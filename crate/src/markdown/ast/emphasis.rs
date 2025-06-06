@@ -4,6 +4,7 @@ use crate::markdown::ast::ParagraphChild;
 use crate::markdown::unist::Position;
 
 #[derive(Debug)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
 pub struct Emphasis {

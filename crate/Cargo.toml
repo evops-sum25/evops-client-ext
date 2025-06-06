@@ -8,6 +8,7 @@ extism-pdk = { version = "1.4.1", optional = true, default-features = false, fea
 ] }
 markdown = "1.0.0"
 prost = { version = "0.13.5", optional = true }
+schemars = { version = "0.9.0", optional = true, features = ["preserve_order"] }
 serde = { version = "1.0.219", optional = true, features = ["derive"] }
 thiserror = "2.0.12"
 uniffi = { version = "0.29.2", optional = true, features = ["cli"] }
@@ -15,6 +16,7 @@ uniffi = { version = "0.29.2", optional = true, features = ["cli"] }
 [features]
 extism = ["protobuf", "dep:extism-pdk"]
 protobuf = ["dep:prost"]
+schemars = ["dep:schemars"]
 serde = ["dep:serde"]
 uniffi = ["dep:uniffi"]
 
