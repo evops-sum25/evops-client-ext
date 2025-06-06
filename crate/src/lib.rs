@@ -6,8 +6,8 @@ pub mod markdown;
 #[cfg(feature = "extism")]
 #[cfg_attr(feature = "extism", extism_pdk::plugin_fn)]
 pub fn parse_markdown(
-    extism_pdk::Prost(request): extism_pdk::Prost<crate::markdown::pb::ParseRequest>,
-) -> extism_pdk::FnResult<extism_pdk::Prost<crate::markdown::pb::ParseResponse>> {
+    extism_pdk::Prost(request): extism_pdk::Prost<crate::markdown::pb::MarkdownServiceParseRequest>,
+) -> extism_pdk::FnResult<extism_pdk::Prost<crate::markdown::pb::MarkdownServiceParseResponse>> {
     Ok(extism_pdk::Prost(
         crate::markdown::parse(&request.text).into(),
     ))

@@ -2,137 +2,137 @@ syntax = "proto3";
 package evops.markdown.v1;
 
 service MarkdownService {
-  rpc Parse(ParseRequest) returns (ParseResponse);
+  rpc Parse(MarkdownServiceParseRequest) returns (MarkdownServiceParseResponse);
 }
 
-message ParseRequest {
+message MarkdownServiceParseRequest {
   string text = 1;
 }
 
-message ParseResponse {
-  repeated RootChild children = 1;
-  Position position = 2;
+message MarkdownServiceParseResponse {
+  repeated MarkdownRootChild children = 1;
+  MarkdownPosition position = 2;
 }
 
-message Point {
+message MarkdownPoint {
   uint32 line = 1;
   uint32 column = 2;
   uint32 offset = 3;
 }
 
-message Position {
-  Point start = 1;
-  Point end = 2;
+message MarkdownPosition {
+  MarkdownPoint start = 1;
+  MarkdownPoint end = 2;
 }
 
-message RootChild {
+message MarkdownRootChild {
   oneof child {
-    Paragraph paragraph = 1;
-    Heading heading = 2;
-    List list = 3;
-    Blockquote blockquote = 4;
-    Code code = 5;
-    ThematicBreak thematic_break = 6;
+    MarkdownParagraph paragraph = 1;
+    MarkdownHeading heading = 2;
+    MarkdownList list = 3;
+    MarkdownBlockquote blockquote = 4;
+    MarkdownCode code = 5;
+    MarkdownThematicBreak thematic_break = 6;
   }
 }
 
-message Paragraph {
-  repeated ParagraphChild children = 1;
-  Position position = 2;
+message MarkdownParagraph {
+  repeated MarkdownParagraphChild children = 1;
+  MarkdownPosition position = 2;
 }
 
-message ParagraphChild {
+message MarkdownParagraphChild {
   oneof child {
-    Text text = 1;
-    Strong strong = 2;
-    Emphasis emphasis = 3;
-    Delete delete = 4;
-    InlineCode inline_code = 5;
-    Link link = 6;
+    MarkdownText text = 1;
+    MarkdownStrong strong = 2;
+    MarkdownEmphasis emphasis = 3;
+    MarkdownDelete delete = 4;
+    MarkdownInlineCode inline_code = 5;
+    MarkdownLink link = 6;
   }
 }
 
-message Text {
+message MarkdownText {
   string value = 1;
-  Position position = 2;
+  MarkdownPosition position = 2;
 }
 
-message Strong {
-  repeated ParagraphChild children = 1;
-  Position position = 2;
+message MarkdownStrong {
+  repeated MarkdownParagraphChild children = 1;
+  MarkdownPosition position = 2;
 }
 
-message Emphasis {
-  repeated ParagraphChild children = 1;
-  Position position = 2;
+message MarkdownEmphasis {
+  repeated MarkdownParagraphChild children = 1;
+  MarkdownPosition position = 2;
 }
 
-message Delete {
-  repeated ParagraphChild children = 1;
-  Position position = 2;
+message MarkdownDelete {
+  repeated MarkdownParagraphChild children = 1;
+  MarkdownPosition position = 2;
 }
 
-message InlineCode {
+message MarkdownInlineCode {
   string value = 1;
-  Position position = 2;
+  MarkdownPosition position = 2;
 }
 
-message Link {
-  repeated LinkChild children = 1;
-  Position position = 2;
+message MarkdownLink {
+  repeated MarkdownLinkChild children = 1;
+  MarkdownPosition position = 2;
   string url = 3;
 }
 
-message LinkChild {
+message MarkdownLinkChild {
   oneof child {
-    Text text = 1;
-    Strong strong = 2;
-    Emphasis emphasis = 3;
-    Delete delete = 4;
-    InlineCode inline_code = 5;
+    MarkdownText text = 1;
+    MarkdownStrong strong = 2;
+    MarkdownEmphasis emphasis = 3;
+    MarkdownDelete delete = 4;
+    MarkdownInlineCode inline_code = 5;
   }
 }
 
-message Heading {
-  repeated ParagraphChild children = 1;
-  Position position = 2;
-  HeadingDepth depth = 3;
+message MarkdownHeading {
+  repeated MarkdownParagraphChild children = 1;
+  MarkdownPosition position = 2;
+  MarkdownHeadingDepth depth = 3;
 }
 
-enum HeadingDepth {
-  HEADING_DEPTH_UNSPECIFIED = 0;
-  HEADING_DEPTH_1 = 1;
-  HEADING_DEPTH_2 = 2;
-  HEADING_DEPTH_3 = 3;
-  HEADING_DEPTH_4 = 4;
-  HEADING_DEPTH_5 = 5;
-  HEADING_DEPTH_6 = 6;
+enum MarkdownHeadingDepth {
+  MARKDOWN_HEADING_DEPTH_UNSPECIFIED = 0;
+  MARKDOWN_HEADING_DEPTH_1 = 1;
+  MARKDOWN_HEADING_DEPTH_2 = 2;
+  MARKDOWN_HEADING_DEPTH_3 = 3;
+  MARKDOWN_HEADING_DEPTH_4 = 4;
+  MARKDOWN_HEADING_DEPTH_5 = 5;
+  MARKDOWN_HEADING_DEPTH_6 = 6;
 }
 
-message List {
-  repeated ListItem children = 1;
-  Position position = 2;
+message MarkdownList {
+  repeated MarkdownListItem children = 1;
+  MarkdownPosition position = 2;
   bool ordered = 3;
   bool spread = 4;
 }
 
-message ListItem {
-  repeated RootChild children = 1;
-  Position position = 2;
+message MarkdownListItem {
+  repeated MarkdownRootChild children = 1;
+  MarkdownPosition position = 2;
   bool spread = 3;
 }
 
-message Blockquote {
-  repeated RootChild children = 1;
-  Position position = 2;
+message MarkdownBlockquote {
+  repeated MarkdownRootChild children = 1;
+  MarkdownPosition position = 2;
 }
 
-message Code {
+message MarkdownCode {
   string value = 1;
-  Position position = 2;
+  MarkdownPosition position = 2;
   optional string lang = 3;
 }
 
-message ThematicBreak {
-  Position position = 1;
+message MarkdownThematicBreak {
+  MarkdownPosition position = 1;
 }
