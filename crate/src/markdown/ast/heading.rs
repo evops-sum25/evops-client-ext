@@ -1,7 +1,8 @@
 use thiserror::Error;
 
-use self::depth::HeadingDepth;
-use crate::markdown::ast::ParagraphChild;
+use self::depth::MarkdownHeadingDepth;
+use crate::markdown::ast::MarkdownParagraphChild;
+use crate::markdown::unist::MarkdownPosition;
 
 pub mod depth;
 
@@ -9,10 +10,10 @@ pub mod depth;
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
-pub struct Heading {
-    pub children: Vec<ParagraphChild>,
-    pub position: crate::markdown::unist::Position,
-    pub depth: HeadingDepth,
+pub struct MarkdownHeading {
+    pub children: Vec<MarkdownParagraphChild>,
+    pub position: MarkdownPosition,
+    pub depth: MarkdownHeadingDepth,
 }
 
 #[derive(Error, Debug)]
@@ -25,7 +26,7 @@ pub enum ConvertError {
     NoPosition,
 }
 
-impl TryFrom<markdown::mdast::Heading> for Heading {
+impl TryFrom<markdown::mdast::Heading> for MarkdownHeading {
     type Error = ConvertError;
 
     fn try_from(value: markdown::mdast::Heading) -> Result<Self, Self::Error> {
@@ -34,7 +35,7 @@ impl TryFrom<markdown::mdast::Heading> for Heading {
                 value
                     .children
                     .into_iter()
-                    .map(ParagraphChild::try_from)
+                    .map(MarkdownParagraphChild::try_from)
                     .collect::<Result<Vec<_>, _>>()?
             },
             position: value.position.ok_or(ConvertError::NoPosition)?.into(),

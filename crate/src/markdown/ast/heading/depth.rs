@@ -4,7 +4,7 @@ use thiserror::Error;
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Enum))]
-pub enum HeadingDepth {
+pub enum MarkdownHeadingDepth {
     Level1 = 1,
     Level2 = 2,
     Level3 = 3,
@@ -19,7 +19,7 @@ pub enum ConvertError {
     InvalidValue(u8),
 }
 
-impl TryFrom<u8> for HeadingDepth {
+impl TryFrom<u8> for MarkdownHeadingDepth {
     type Error = ConvertError;
 
     fn try_from(value: u8) -> Result<Self, Self::Error> {

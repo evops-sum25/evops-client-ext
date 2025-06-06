@@ -1,7 +1,7 @@
 use thiserror::Error;
 
-use self::child::LinkChild;
-use crate::markdown::unist::Position;
+use self::child::MarkdownLinkChild;
+use crate::markdown::unist::MarkdownPosition;
 
 pub mod child;
 
@@ -9,9 +9,9 @@ pub mod child;
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
-pub struct Link {
-    pub children: Vec<LinkChild>,
-    pub position: Position,
+pub struct MarkdownLink {
+    pub children: Vec<MarkdownLinkChild>,
+    pub position: MarkdownPosition,
     pub url: String,
 }
 
@@ -23,7 +23,7 @@ pub enum ConvertError {
     NoPosition,
 }
 
-impl TryFrom<markdown::mdast::Link> for Link {
+impl TryFrom<markdown::mdast::Link> for MarkdownLink {
     type Error = ConvertError;
 
     fn try_from(value: markdown::mdast::Link) -> Result<Self, Self::Error> {
@@ -34,7 +34,7 @@ impl TryFrom<markdown::mdast::Link> for Link {
                 value
                     .children
                     .into_iter()
-                    .map(LinkChild::try_from)
+                    .map(MarkdownLinkChild::try_from)
                     .collect::<Result<Vec<_>, _>>()?
             },
             position: value.position.ok_or(ConvertError::NoPosition)?.into(),

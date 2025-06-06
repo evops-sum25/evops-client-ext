@@ -15,6 +15,6 @@ pub fn parse_markdown(
 
 #[cfg(feature = "uniffi")]
 #[cfg_attr(feature = "uniffi", uniffi::export)]
-fn parse_markdown(text: &str) -> crate::markdown::ast::Root {
+fn parse_markdown(text: &str) -> crate::markdown::ast::MarkdownRoot {
     crate::markdown::parse(text)
 }
