@@ -9,7 +9,7 @@ pub mod child;
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
-pub struct MarkdownRoot {
+pub struct MarkdownServiceParseResponse {
     pub children: Vec<MarkdownRootChild>,
     pub position: MarkdownPosition,
 }
@@ -22,7 +22,7 @@ pub enum ConvertError {
     NoPosition,
 }
 
-impl TryFrom<markdown::mdast::Root> for MarkdownRoot {
+impl TryFrom<markdown::mdast::Root> for MarkdownServiceParseResponse {
     type Error = ConvertError;
 
     fn try_from(value: markdown::mdast::Root) -> Result<Self, Self::Error> {

@@ -4,14 +4,14 @@ mod native {
     pub use crate::markdown::ast::{
         MarkdownBlockquote, MarkdownCode, MarkdownDelete, MarkdownEmphasis, MarkdownHeading,
         MarkdownHeadingDepth, MarkdownInlineCode, MarkdownLink, MarkdownLinkChild, MarkdownList,
-        MarkdownListItem, MarkdownParagraph, MarkdownParagraphChild, MarkdownRoot,
+        MarkdownListItem, MarkdownParagraph, MarkdownParagraphChild, MarkdownServiceParseResponse,
         MarkdownRootChild, MarkdownStrong, MarkdownText, MarkdownThematicBreak,
     };
     pub use crate::markdown::unist::{MarkdownPoint, MarkdownPosition};
 }
 
-impl From<self::native::MarkdownRoot> for self::MarkdownServiceParseResponse {
-    fn from(value: self::native::MarkdownRoot) -> Self {
+impl From<self::native::MarkdownServiceParseResponse> for self::MarkdownServiceParseResponse {
+    fn from(value: self::native::MarkdownServiceParseResponse) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
             position: Some(value.position.into()),
