@@ -172,12 +172,12 @@ impl From<self::native::MarkdownHeadingDepth> for self::MarkdownHeadingDepth {
         use self::native::MarkdownHeadingDepth as D;
 
         match value {
-            D::Level1 => Self::MarkdownHeadingDepth1,
-            D::Level2 => Self::MarkdownHeadingDepth2,
-            D::Level3 => Self::MarkdownHeadingDepth3,
-            D::Level4 => Self::MarkdownHeadingDepth4,
-            D::Level5 => Self::MarkdownHeadingDepth5,
-            D::Level6 => Self::MarkdownHeadingDepth6,
+            D::MarkdownHeadingDepth1 => Self::MarkdownHeadingDepth1,
+            D::MarkdownHeadingDepth2 => Self::MarkdownHeadingDepth2,
+            D::MarkdownHeadingDepth3 => Self::MarkdownHeadingDepth3,
+            D::MarkdownHeadingDepth4 => Self::MarkdownHeadingDepth4,
+            D::MarkdownHeadingDepth5 => Self::MarkdownHeadingDepth5,
+            D::MarkdownHeadingDepth6 => Self::MarkdownHeadingDepth6,
         }
     }
 }
