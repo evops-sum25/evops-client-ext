@@ -1,6 +1,7 @@
 use std::fmt::{self, Debug, Formatter};
 
 #[derive(Debug)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 pub struct Coordinate(pub usize);
 
@@ -20,6 +21,7 @@ impl From<u16> for Coordinate {
 uniffi::custom_type!(Coordinate, u16);
 
 #[derive(Debug)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
 pub struct Point {
@@ -38,6 +40,7 @@ impl From<markdown::unist::Point> for Point {
     }
 }
 
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
 pub struct Position {
