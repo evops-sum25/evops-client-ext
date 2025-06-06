@@ -3,39 +3,39 @@ use std::fmt::{self, Debug, Formatter};
 #[derive(Debug)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
-pub struct Coordinate(pub usize);
+pub struct MarkdownCoordinate(pub usize);
 
-impl From<Coordinate> for u16 {
-    fn from(value: Coordinate) -> Self {
+impl From<MarkdownCoordinate> for u16 {
+    fn from(value: MarkdownCoordinate) -> Self {
         value.0.try_into().expect("coordinate should fit in u16")
     }
 }
 
-impl From<u16> for Coordinate {
+impl From<u16> for MarkdownCoordinate {
     fn from(value: u16) -> Self {
-        Coordinate(value.into())
+        MarkdownCoordinate(value.into())
     }
 }
 
 #[cfg(feature = "uniffi")]
-uniffi::custom_type!(Coordinate, u16);
+uniffi::custom_type!(MarkdownCoordinate, u16);
 
 #[derive(Debug)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
-pub struct Point {
-    pub line: Coordinate,
-    pub column: Coordinate,
-    pub offset: Coordinate,
+pub struct MarkdownPoint {
+    pub line: MarkdownCoordinate,
+    pub column: MarkdownCoordinate,
+    pub offset: MarkdownCoordinate,
 }
 
-impl From<markdown::unist::Point> for Point {
+impl From<markdown::unist::Point> for MarkdownPoint {
     fn from(value: markdown::unist::Point) -> Self {
         Self {
-            line: Coordinate(value.line),
-            column: Coordinate(value.column),
-            offset: Coordinate(value.offset),
+            line: MarkdownCoordinate(value.line),
+            column: MarkdownCoordinate(value.column),
+            offset: MarkdownCoordinate(value.offset),
         }
     }
 }
@@ -43,12 +43,12 @@ impl From<markdown::unist::Point> for Point {
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
-pub struct Position {
-    pub start: Point,
-    pub end: Point,
+pub struct MarkdownPosition {
+    pub start: MarkdownPoint,
+    pub end: MarkdownPoint,
 }
 
-impl From<markdown::unist::Position> for Position {
+impl From<markdown::unist::Position> for MarkdownPosition {
     fn from(value: markdown::unist::Position) -> Self {
         Self {
             start: value.start.into(),
@@ -57,7 +57,7 @@ impl From<markdown::unist::Position> for Position {
     }
 }
 
-impl Debug for Position {
+impl Debug for MarkdownPosition {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         write!(
             f,

@@ -1,7 +1,7 @@
 use thiserror::Error;
 
-use self::child::RootChild;
-use crate::markdown::unist::Position;
+use self::child::MarkdownRootChild;
+use crate::markdown::unist::MarkdownPosition;
 
 pub mod child;
 
@@ -9,9 +9,9 @@ pub mod child;
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
-pub struct Root {
-    pub children: Vec<RootChild>,
-    pub position: Position,
+pub struct MarkdownServiceParseResponse {
+    pub children: Vec<MarkdownRootChild>,
+    pub position: MarkdownPosition,
 }
 
 #[derive(Error, Debug)]
@@ -22,7 +22,7 @@ pub enum ConvertError {
     NoPosition,
 }
 
-impl TryFrom<markdown::mdast::Root> for Root {
+impl TryFrom<markdown::mdast::Root> for MarkdownServiceParseResponse {
     type Error = ConvertError;
 
     fn try_from(value: markdown::mdast::Root) -> Result<Self, Self::Error> {
@@ -31,7 +31,7 @@ impl TryFrom<markdown::mdast::Root> for Root {
                 value
                     .children
                     .into_iter()
-                    .map(RootChild::try_from)
+                    .map(MarkdownRootChild::try_from)
                     .collect::<Result<_, _>>()?
             },
             position: value.position.ok_or(ConvertError::NoPosition)?.into(),

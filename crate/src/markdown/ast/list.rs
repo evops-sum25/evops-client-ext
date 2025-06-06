@@ -1,7 +1,7 @@
 use thiserror::Error;
 
-use self::item::ListItem;
-use crate::markdown::unist::Position;
+use self::item::MarkdownListItem;
+use crate::markdown::unist::MarkdownPosition;
 
 pub mod item;
 
@@ -9,9 +9,9 @@ pub mod item;
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
-pub struct List {
-    pub children: Vec<ListItem>,
-    pub position: Position,
+pub struct MarkdownList {
+    pub children: Vec<MarkdownListItem>,
+    pub position: MarkdownPosition,
     pub ordered: bool,
     pub spread: bool,
 }
@@ -26,7 +26,7 @@ pub enum ConvertError {
     NoPosition,
 }
 
-impl TryFrom<markdown::mdast::List> for List {
+impl TryFrom<markdown::mdast::List> for MarkdownList {
     type Error = ConvertError;
 
     fn try_from(value: markdown::mdast::List) -> Result<Self, Self::Error> {
@@ -35,9 +35,9 @@ impl TryFrom<markdown::mdast::List> for List {
                 value
                     .children
                     .into_iter()
-                    .map(|node| -> Result<ListItem, Self::Error> {
+                    .map(|node| -> Result<MarkdownListItem, Self::Error> {
                         if let markdown::mdast::Node::ListItem(li) = node {
-                            Ok(ListItem::try_from(li)?)
+                            Ok(MarkdownListItem::try_from(li)?)
                         } else {
                             Err(ConvertError::NotItem(node))
                         }

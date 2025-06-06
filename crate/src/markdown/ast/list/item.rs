@@ -1,15 +1,15 @@
 use thiserror::Error;
 
-use crate::markdown::ast::RootChild;
-use crate::markdown::unist::Position;
+use crate::markdown::ast::MarkdownRootChild;
+use crate::markdown::unist::MarkdownPosition;
 
 #[derive(Debug)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
-pub struct ListItem {
-    pub children: Vec<RootChild>,
-    pub position: Position,
+pub struct MarkdownListItem {
+    pub children: Vec<MarkdownRootChild>,
+    pub position: MarkdownPosition,
     pub spread: bool,
 }
 
@@ -21,7 +21,7 @@ pub enum ConvertError {
     NoPosition,
 }
 
-impl TryFrom<markdown::mdast::ListItem> for ListItem {
+impl TryFrom<markdown::mdast::ListItem> for MarkdownListItem {
     type Error = ConvertError;
 
     fn try_from(value: markdown::mdast::ListItem) -> Result<Self, Self::Error> {
@@ -30,7 +30,7 @@ impl TryFrom<markdown::mdast::ListItem> for ListItem {
                 value
                     .children
                     .into_iter()
-                    .map(RootChild::try_from)
+                    .map(MarkdownRootChild::try_from)
                     .collect::<Result<Vec<_>, _>>()
                     .map_err(Box::new)?
             },

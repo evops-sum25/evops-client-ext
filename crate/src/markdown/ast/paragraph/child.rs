@@ -1,16 +1,21 @@
 use thiserror::Error;
 
+use crate::markdown::ast::{
+    MarkdownDelete, MarkdownEmphasis, MarkdownInlineCode, MarkdownLink, MarkdownStrong,
+    MarkdownText,
+};
+
 #[derive(Debug)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Enum))]
-pub enum ParagraphChild {
-    Text(crate::markdown::ast::Text),
-    Strong(crate::markdown::ast::Strong),
-    Emphasis(crate::markdown::ast::Emphasis),
-    Delete(crate::markdown::ast::Delete),
-    InlineCode(crate::markdown::ast::InlineCode),
-    Link(crate::markdown::ast::Link),
+pub enum MarkdownParagraphChild {
+    Text(MarkdownText),
+    Strong(MarkdownStrong),
+    Emphasis(MarkdownEmphasis),
+    Delete(MarkdownDelete),
+    InlineCode(MarkdownInlineCode),
+    Link(MarkdownLink),
 }
 
 #[derive(Error, Debug)]
@@ -31,7 +36,7 @@ pub enum ConvertError {
     InvalidNode(markdown::mdast::Node),
 }
 
-impl TryFrom<markdown::mdast::Node> for ParagraphChild {
+impl TryFrom<markdown::mdast::Node> for MarkdownParagraphChild {
     type Error = ConvertError;
 
     fn try_from(value: markdown::mdast::Node) -> Result<Self, Self::Error> {

@@ -1,14 +1,14 @@
 use thiserror::Error;
 
-use crate::markdown::unist::Position;
+use crate::markdown::unist::MarkdownPosition;
 
 #[derive(Debug)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
-pub struct Code {
+pub struct MarkdownCode {
     pub value: String,
-    pub position: Position,
+    pub position: MarkdownPosition,
     pub lang: Option<String>,
 }
 
@@ -18,7 +18,7 @@ pub enum ConvertError {
     NoPosition,
 }
 
-impl TryFrom<markdown::mdast::Code> for Code {
+impl TryFrom<markdown::mdast::Code> for MarkdownCode {
     type Error = ConvertError;
 
     fn try_from(value: markdown::mdast::Code) -> Result<Self, Self::Error> {

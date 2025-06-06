@@ -1,13 +1,13 @@
 use thiserror::Error;
 
-use crate::markdown::unist::Position;
+use crate::markdown::unist::MarkdownPosition;
 
 #[derive(Debug)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
-pub struct ThematicBreak {
-    pub position: Position,
+pub struct MarkdownThematicBreak {
+    pub position: MarkdownPosition,
 }
 
 #[derive(Error, Debug)]
@@ -16,7 +16,7 @@ pub enum ConvertError {
     NoPosition,
 }
 
-impl TryFrom<markdown::mdast::ThematicBreak> for ThematicBreak {
+impl TryFrom<markdown::mdast::ThematicBreak> for MarkdownThematicBreak {
     type Error = ConvertError;
 
     fn try_from(value: markdown::mdast::ThematicBreak) -> Result<Self, Self::Error> {
