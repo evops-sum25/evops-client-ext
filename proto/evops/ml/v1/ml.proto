@@ -10,7 +10,7 @@ message MlServiceAskRequest {
   string description = 2;
 }
 
-message MlServiceAskRequest {
+message MlServiceAskResponse {
   string name = 1;
   string description = 2;
 }
