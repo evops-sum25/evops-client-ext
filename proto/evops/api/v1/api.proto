@@ -1,17 +1,83 @@
 syntax = "proto3";
 package evops.api.v1;
 
-import "evops/api/v1/event_service.proto";
+import "google/protobuf/timestamp.proto";
+
 service EventService {
   rpc Create(EventServiceCreateRequest) returns (EventServiceCreateResponse);
 }
 
-import "evops/api/v1/tag_service.proto";
 service TagService {
   rpc Create(TagServiceCreateRequest) returns (TagServiceCreateResponse);
 }
 
-import "evops/api/v1/user_service.proto";
 service UserService {
   rpc Create(UserServiceCreateRequest) returns (UserServiceCreateResponse);
+}
+
+message EventServiceCreateRequest {
+  NewEventForm form = 1;
+}
+
+message EventServiceCreateResponse {
+  Event event = 1;
+}
+
+message NewEventForm {
+  string author_id = 1;
+  repeated string image_urls = 2;
+  string title = 3;
+  string description = 4;
+  repeated string tag_ids = 5;
+  bool with_attendance = 6;
+}
+
+message Event {
+  string id = 1;
+  User author = 2;
+  repeated string image_urls = 3;
+  string title = 4;
+  string description = 5;
+  repeated Tag tags = 6;
+  bool with_attendance = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp modified_at = 9;
+}
+
+message TagServiceCreateRequest {
+  NewTagForm form = 1;
+}
+
+message TagServiceCreateResponse {
+  Tag tag = 1;
+}
+
+message NewTagForm {
+  string name = 1;
+  repeated string aliases = 2;
+}
+
+message Tag {
+  string id = 1;
+  string name = 2;
+  repeated string aliases = 3;
+}
+
+message UserServiceCreateRequest {
+  NewUserForm form = 1;
+}
+
+message UserServiceCreateResponse {
+  User user = 1;
+}
+
+message NewUserForm {
+  string name = 1;
+  optional string profile_picture_url = 2;
+}
+
+message User {
+  string id = 1;
+  string name = 2;
+  optional string profile_picture_url = 3;
 }

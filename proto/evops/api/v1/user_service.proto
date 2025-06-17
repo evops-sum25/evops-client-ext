@@ -1,6 +1,0 @@
-syntax = "proto3";
-package evops.api.v1;
-
-message UserServiceCreateRequest {}
-
-message UserServiceCreateResponse {}
