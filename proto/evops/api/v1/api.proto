@@ -4,15 +4,36 @@ package evops.api.v1;
 import "google/protobuf/timestamp.proto";
 
 service EventService {
+  rpc List(EventServiceListRequest) returns (EventServiceListResponse);
   rpc Create(EventServiceCreateRequest) returns (EventServiceCreateResponse);
 }
 
 service TagService {
+  rpc List(TagServiceListRequest) returns (TagServiceListResponse);
   rpc Create(TagServiceCreateRequest) returns (TagServiceCreateResponse);
 }
 
 service UserService {
+  rpc List(UserServiceListRequest) returns (UserServiceListResponse);
   rpc Create(UserServiceCreateRequest) returns (UserServiceCreateResponse);
+}
+
+message EventServiceListRequest {}
+
+message EventServiceListResponse {
+  repeated Event events = 1;
+}
+
+message TagServiceListRequest {}
+
+message TagServiceListResponse {
+  repeated Tag tags = 1;
+}
+
+message UserServiceListRequest {}
+
+message UserServiceListResponse {
+  repeated User users = 1;
 }
 
 message EventServiceCreateRequest {
