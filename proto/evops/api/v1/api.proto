@@ -4,18 +4,45 @@ package evops.api.v1;
 import "google/protobuf/timestamp.proto";
 
 service EventService {
+  rpc Find(EventServiceFindRequest) returns (EventServiceFindResponse);
   rpc List(EventServiceListRequest) returns (EventServiceListResponse);
   rpc Create(EventServiceCreateRequest) returns (EventServiceCreateResponse);
 }
 
 service TagService {
+  rpc Find(TagServiceFindRequest) returns (TagServiceFindResponse);
   rpc List(TagServiceListRequest) returns (TagServiceListResponse);
   rpc Create(TagServiceCreateRequest) returns (TagServiceCreateResponse);
 }
 
 service UserService {
+  rpc Find(UserServiceFindRequest) returns (UserServiceFindResponse);
   rpc List(UserServiceListRequest) returns (UserServiceListResponse);
   rpc Create(UserServiceCreateRequest) returns (UserServiceCreateResponse);
+}
+
+message EventServiceFindRequest {
+  string id = 1;
+}
+
+message EventServiceFindResponse {
+  Event event = 1;
+}
+
+message TagServiceFindRequest {
+  string id = 1;
+}
+
+message TagServiceFindResponse {
+  Tag tag = 1;
+}
+
+message UserServiceFindRequest {
+  string id = 1;
+}
+
+message UserServiceFindResponse {
+  User user = 1;
 }
 
 message EventServiceListRequest {}
