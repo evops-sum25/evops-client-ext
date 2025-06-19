@@ -4,8 +4,11 @@ package evops.api.v1;
 import "google/protobuf/timestamp.proto";
 
 service EventService {
+  // Finds an event by its ID.
   rpc Find(EventServiceFindRequest) returns (EventServiceFindResponse);
+  // Returns all existing events.
   rpc List(EventServiceListRequest) returns (EventServiceListResponse);
+  // Creates a new event.
   rpc Create(EventServiceCreateRequest) returns (EventServiceCreateResponse);
 }
 
@@ -22,10 +25,12 @@ service UserService {
 }
 
 message EventServiceFindRequest {
+  // UUID, must be set.
   string id = 1;
 }
 
 message EventServiceFindResponse {
+  // The event with the given ID, is always set.
   Event event = 1;
 }
 
