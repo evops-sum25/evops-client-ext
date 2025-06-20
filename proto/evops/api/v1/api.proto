@@ -95,7 +95,7 @@ message EventServiceCreateResponse {
 }
 
 message NewEventForm {
-  // **Required**. UUID of the creating user
+  // **Required**. UUID of the creating user.
   string author_id = 1;
   // URLs of event images.
   repeated string image_urls = 2;
@@ -150,9 +150,9 @@ message NewTagForm {
 message Tag {
   // Tag UUID.
   string id = 1;
-  // Unique name (e.g., "Music," "Tech").
+  // Unique name (e.g., `"Music"`, `"Tech"`).
   string name = 2;
-  // Alternative names (e.g., `["Concert", "Gig"]` for "Music").
+  // Alternative names (e.g., `["Concert", "Gig"]` for `"Music"`).
   repeated string aliases = 3;
 }
 
@@ -166,7 +166,6 @@ message UserServiceCreateResponse {
   User user = 1;
 }
 
-// Experiment Foo Bar.
 message NewUserForm {
   // **Required**. Display name.
   string name = 1;
