@@ -74,7 +74,7 @@ fn get_event_title_max_len() -> u8 {
 }
 
 #[uniffi::export]
-fn get_event_description_max_len() -> u8 {
+fn get_event_description_max_len() -> u16 {
     evops_models::EVENT_DESCRIPTION_MAX_LEN.try_into().unwrap()
 }
 
