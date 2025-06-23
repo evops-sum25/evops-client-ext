@@ -3,7 +3,7 @@
 ### UniFFI (Kotlin)
 
 ```shell
-cargo run --package=evops-uniffi --release -- generate --language=kotlin --out-dir=target/ --library target/release/libevops_uniffi.so
+cargo run --package=evops-uniffi --release -- generate --language=kotlin --out-dir=target/ --library target/release/libevops_bindings.so
 ```
 
 `target/uniffi/`
@@ -14,4 +14,4 @@ cargo run --package=evops-uniffi --release -- generate --language=kotlin --out-d
 cargo build --package=evops-extism --release --target=wasm32-unknown-unknown
 ```
 
-`target/wasm32-unknown-unknown/release/evops_extism.wasm`
+`target/wasm32-unknown-unknown/release/evops_plugin.wasm`

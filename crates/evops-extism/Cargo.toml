@@ -3,6 +3,7 @@ name = "evops-extism"
 edition = "2024"
 
 [lib]
+name = "evops_plugin"
 crate-type = ["cdylib"]
 
 [dependencies]
