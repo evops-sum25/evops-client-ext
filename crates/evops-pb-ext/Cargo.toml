@@ -3,6 +3,9 @@ name = "evops-pb-ext"
 edition = "2024"
 
 [dependencies]
+evops-models = { workspace = true }
+
+# Needed by build.rs.
 prost = { workspace = true }
 
 [build-dependencies]
