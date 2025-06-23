@@ -1,3 +1,5 @@
+#![allow(clippy::unnecessary_wraps)]
+
 use extism_pdk::{FnResult, Prost};
 
 use evops_pb_ext::{
