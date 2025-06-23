@@ -9,7 +9,7 @@ pub mod ast;
 pub mod unist;
 
 #[cfg(feature = "protobuf")]
-pub mod pb;
+mod pb_conversions;
 
 /// # Panics
 ///

@@ -1,5 +1,3 @@
-include!(concat!(env!("OUT_DIR"), "/evops.markdown.v1.rs"));
-
 mod native {
     pub use crate::ast::{
         MarkdownBlockquote, MarkdownCode, MarkdownDelete, MarkdownEmphasis, MarkdownHeading,
@@ -10,7 +8,7 @@ mod native {
     pub use crate::unist::{MarkdownPoint, MarkdownPosition};
 }
 
-impl From<self::native::MarkdownRoot> for self::MarkdownRoot {
+impl From<self::native::MarkdownRoot> for evops_pb_ext::MarkdownRoot {
     fn from(value: self::native::MarkdownRoot) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
@@ -19,7 +17,7 @@ impl From<self::native::MarkdownRoot> for self::MarkdownRoot {
     }
 }
 
-impl From<self::native::MarkdownPoint> for self::MarkdownPoint {
+impl From<self::native::MarkdownPoint> for evops_pb_ext::MarkdownPoint {
     fn from(value: self::native::MarkdownPoint) -> Self {
         const MSG: &str = "coordinate should fit in u32";
 
@@ -31,7 +29,7 @@ impl From<self::native::MarkdownPoint> for self::MarkdownPoint {
     }
 }
 
-impl From<self::native::MarkdownPosition> for self::MarkdownPosition {
+impl From<self::native::MarkdownPosition> for evops_pb_ext::MarkdownPosition {
     fn from(value: self::native::MarkdownPosition) -> Self {
         Self {
             start: Some(value.start.into()),
@@ -40,10 +38,10 @@ impl From<self::native::MarkdownPosition> for self::MarkdownPosition {
     }
 }
 
-impl From<self::native::MarkdownRootChild> for self::MarkdownRootChild {
+impl From<self::native::MarkdownRootChild> for evops_pb_ext::MarkdownRootChild {
     fn from(value: self::native::MarkdownRootChild) -> Self {
-        use self::markdown_root_child::Child as Pb;
         use self::native::MarkdownRootChild as N;
+        use evops_pb_ext::markdown_root_child::Child as Pb;
 
         Self {
             child: Some(match value {
@@ -58,7 +56,7 @@ impl From<self::native::MarkdownRootChild> for self::MarkdownRootChild {
     }
 }
 
-impl From<self::native::MarkdownParagraph> for self::MarkdownParagraph {
+impl From<self::native::MarkdownParagraph> for evops_pb_ext::MarkdownParagraph {
     fn from(value: self::native::MarkdownParagraph) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
@@ -67,10 +65,10 @@ impl From<self::native::MarkdownParagraph> for self::MarkdownParagraph {
     }
 }
 
-impl From<self::native::MarkdownParagraphChild> for self::MarkdownParagraphChild {
+impl From<self::native::MarkdownParagraphChild> for evops_pb_ext::MarkdownParagraphChild {
     fn from(value: self::native::MarkdownParagraphChild) -> Self {
-        use self::markdown_paragraph_child::Child as Pb;
         use self::native::MarkdownParagraphChild as N;
+        use evops_pb_ext::markdown_paragraph_child::Child as Pb;
 
         Self {
             child: Some(match value {
@@ -85,7 +83,7 @@ impl From<self::native::MarkdownParagraphChild> for self::MarkdownParagraphChild
     }
 }
 
-impl From<self::native::MarkdownText> for self::MarkdownText {
+impl From<self::native::MarkdownText> for evops_pb_ext::MarkdownText {
     fn from(value: self::native::MarkdownText) -> Self {
         Self {
             value: value.value,
@@ -94,7 +92,7 @@ impl From<self::native::MarkdownText> for self::MarkdownText {
     }
 }
 
-impl From<self::native::MarkdownStrong> for self::MarkdownStrong {
+impl From<self::native::MarkdownStrong> for evops_pb_ext::MarkdownStrong {
     fn from(value: self::native::MarkdownStrong) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
@@ -103,7 +101,7 @@ impl From<self::native::MarkdownStrong> for self::MarkdownStrong {
     }
 }
 
-impl From<self::native::MarkdownEmphasis> for self::MarkdownEmphasis {
+impl From<self::native::MarkdownEmphasis> for evops_pb_ext::MarkdownEmphasis {
     fn from(value: self::native::MarkdownEmphasis) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
@@ -112,7 +110,7 @@ impl From<self::native::MarkdownEmphasis> for self::MarkdownEmphasis {
     }
 }
 
-impl From<self::native::MarkdownDelete> for self::MarkdownDelete {
+impl From<self::native::MarkdownDelete> for evops_pb_ext::MarkdownDelete {
     fn from(value: self::native::MarkdownDelete) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
@@ -121,7 +119,7 @@ impl From<self::native::MarkdownDelete> for self::MarkdownDelete {
     }
 }
 
-impl From<self::native::MarkdownInlineCode> for self::MarkdownInlineCode {
+impl From<self::native::MarkdownInlineCode> for evops_pb_ext::MarkdownInlineCode {
     fn from(value: self::native::MarkdownInlineCode) -> Self {
         Self {
             value: value.value,
@@ -130,7 +128,7 @@ impl From<self::native::MarkdownInlineCode> for self::MarkdownInlineCode {
     }
 }
 
-impl From<self::native::MarkdownLink> for self::MarkdownLink {
+impl From<self::native::MarkdownLink> for evops_pb_ext::MarkdownLink {
     fn from(value: self::native::MarkdownLink) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
@@ -140,10 +138,10 @@ impl From<self::native::MarkdownLink> for self::MarkdownLink {
     }
 }
 
-impl From<self::native::MarkdownLinkChild> for self::MarkdownLinkChild {
+impl From<self::native::MarkdownLinkChild> for evops_pb_ext::MarkdownLinkChild {
     fn from(value: self::native::MarkdownLinkChild) -> Self {
-        use self::markdown_link_child::Child as Pb;
         use self::native::MarkdownLinkChild as N;
+        use evops_pb_ext::markdown_link_child::Child as Pb;
 
         Self {
             child: Some(match value {
@@ -157,17 +155,17 @@ impl From<self::native::MarkdownLinkChild> for self::MarkdownLinkChild {
     }
 }
 
-impl From<self::native::MarkdownHeading> for self::MarkdownHeading {
+impl From<self::native::MarkdownHeading> for evops_pb_ext::MarkdownHeading {
     fn from(value: self::native::MarkdownHeading) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
             position: Some(value.position.into()),
-            depth: self::MarkdownHeadingDepth::from(value.depth).into(),
+            depth: evops_pb_ext::MarkdownHeadingDepth::from(value.depth).into(),
         }
     }
 }
 
-impl From<self::native::MarkdownHeadingDepth> for self::MarkdownHeadingDepth {
+impl From<self::native::MarkdownHeadingDepth> for evops_pb_ext::MarkdownHeadingDepth {
     fn from(value: self::native::MarkdownHeadingDepth) -> Self {
         use self::native::MarkdownHeadingDepth as D;
 
@@ -182,7 +180,7 @@ impl From<self::native::MarkdownHeadingDepth> for self::MarkdownHeadingDepth {
     }
 }
 
-impl From<self::native::MarkdownList> for self::MarkdownList {
+impl From<self::native::MarkdownList> for evops_pb_ext::MarkdownList {
     fn from(value: self::native::MarkdownList) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
@@ -193,7 +191,7 @@ impl From<self::native::MarkdownList> for self::MarkdownList {
     }
 }
 
-impl From<self::native::MarkdownListItem> for self::MarkdownListItem {
+impl From<self::native::MarkdownListItem> for evops_pb_ext::MarkdownListItem {
     fn from(value: self::native::MarkdownListItem) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
@@ -203,7 +201,7 @@ impl From<self::native::MarkdownListItem> for self::MarkdownListItem {
     }
 }
 
-impl From<self::native::MarkdownBlockquote> for self::MarkdownBlockquote {
+impl From<self::native::MarkdownBlockquote> for evops_pb_ext::MarkdownBlockquote {
     fn from(value: self::native::MarkdownBlockquote) -> Self {
         Self {
             children: value.children.into_iter().map(Into::into).collect(),
@@ -212,7 +210,7 @@ impl From<self::native::MarkdownBlockquote> for self::MarkdownBlockquote {
     }
 }
 
-impl From<self::native::MarkdownCode> for self::MarkdownCode {
+impl From<self::native::MarkdownCode> for evops_pb_ext::MarkdownCode {
     fn from(value: self::native::MarkdownCode) -> Self {
         Self {
             value: value.value,
@@ -222,7 +220,7 @@ impl From<self::native::MarkdownCode> for self::MarkdownCode {
     }
 }
 
-impl From<self::native::MarkdownThematicBreak> for self::MarkdownThematicBreak {
+impl From<self::native::MarkdownThematicBreak> for evops_pb_ext::MarkdownThematicBreak {
     fn from(value: self::native::MarkdownThematicBreak) -> Self {
         Self {
             position: Some(value.position.into()),

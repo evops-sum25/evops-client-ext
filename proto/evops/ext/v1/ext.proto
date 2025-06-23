@@ -1,5 +1,5 @@
 syntax = "proto3";
-package evops.markdown.v1;
+package evops.ext.v1;
 
 service MarkdownService {
   rpc Parse(MarkdownServiceParseRequest) returns (MarkdownServiceParseResponse);

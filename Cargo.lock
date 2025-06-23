@@ -499,6 +499,7 @@ name = "evops-extism"
 version = "0.0.0"
 dependencies = [
  "evops-markdown",
+ "evops-pb-ext",
  "extism-pdk",
 ]
 
@@ -506,9 +507,8 @@ dependencies = [
 name = "evops-markdown"
 version = "0.0.0"
 dependencies = [
+ "evops-pb-ext",
  "markdown",
- "prost",
- "prost-build",
  "schemars",
  "serde",
  "thiserror 2.0.12",
@@ -530,6 +530,14 @@ dependencies = [
  "tonic",
  "url",
  "uuid",
+]
+
+[[package]]
+name = "evops-pb-ext"
+version = "0.0.0"
+dependencies = [
+ "prost",
+ "prost-build",
 ]
 
 [[package]]

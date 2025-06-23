@@ -5,6 +5,7 @@ members = ["crates/*/"]
 [workspace.dependencies]
 evops-markdown = { path = "crates/evops-markdown/" }
 evops-models = { path = "crates/evops-models/" }
+evops-pb-ext = { path = "crates/evops-pb-ext/" }
 
 aide = "0.15.0"
 axum = "0.8.4"
