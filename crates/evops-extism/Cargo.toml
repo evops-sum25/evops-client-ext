@@ -1,0 +1,11 @@
+[package]
+name = "evops-extism"
+edition = "2024"
+
+[dependencies]
+evops-markdown = { workspace = true, features = ["protobuf"] }
+
+extism-pdk = { workspace = true, features = ["protobuf"] }
+
+[lints]
+workspace = true

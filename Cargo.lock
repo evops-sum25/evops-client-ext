@@ -216,10 +216,17 @@ dependencies = [
 ]
 
 [[package]]
-name = "evops-client-ext"
+name = "evops-extism"
 version = "0.0.0"
 dependencies = [
+ "evops-markdown",
  "extism-pdk",
+]
+
+[[package]]
+name = "evops-markdown"
+version = "0.0.0"
+dependencies = [
  "markdown",
  "prost",
  "prost-build",
@@ -230,8 +237,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "evops-markdown"
+name = "evops-uniffi"
 version = "0.0.0"
+dependencies = [
+ "evops-markdown",
+ "uniffi",
+]
 
 [[package]]
 name = "extism-convert"

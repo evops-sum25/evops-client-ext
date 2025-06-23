@@ -3,6 +3,8 @@ resolver = "3"
 members = ["crates/*/"]
 
 [workspace.dependencies]
+evops-markdown = { path = "crates/evops-markdown/" }
+
 extism-pdk = { version = "1.4.1", default-features = false }
 markdown = "1.0.0"
 prost = "0.13.5"
