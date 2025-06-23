@@ -11,10 +11,13 @@ pub mod unist;
 #[cfg(feature = "protobuf")]
 pub mod pb;
 
+/// # Panics
+///
+/// This function should never panic because Markdown does not have syntax errors.
 #[must_use]
-pub fn parse(value: &str) -> MarkdownServiceParseResponse {
+pub fn parse(text: &str) -> MarkdownServiceParseResponse {
     let mdast = {
-        markdown::to_mdast(value, &parse_options()).expect("CommonMark doesn't have syntax errors")
+        markdown::to_mdast(text, &parse_options()).expect("CommonMark doesn't have syntax errors")
     };
     let markdown::mdast::Node::Root(root) = mdast else {
         unreachable!("when parsing entire documents, we should get a Root element");

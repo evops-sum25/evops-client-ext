@@ -13,7 +13,7 @@ impl From<MarkdownCoordinate> for u16 {
 
 impl From<u16> for MarkdownCoordinate {
     fn from(value: u16) -> Self {
-        MarkdownCoordinate(value.into())
+        Self(value.into())
     }
 }
 
