@@ -3,7 +3,7 @@
 ### UniFFI (Kotlin)
 
 ```shell
-cargo run --package=evops-uniffi --release -- generate --language=kotlin --out-dir=target/ --library target/release/libevops_bindings.so
+cargo run --package=evops-uniffi --release -- generate --language=kotlin --out-dir=target/ --library target/release/libevops.so
 ```
 
 `target/uniffi/`

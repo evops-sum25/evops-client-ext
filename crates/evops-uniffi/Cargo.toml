@@ -3,7 +3,7 @@ name = "evops-uniffi"
 edition = "2024"
 
 [lib]
-name = "evops_bindings"
+name = "evops"
 crate-type = ["cdylib"]
 
 [dependencies]
