@@ -15,10 +15,7 @@ enum ValidateUserNameResult {
 }
 #[uniffi::export]
 fn validate_user_name(user_name: &str) -> self::ValidateUserNameResult {
-    match evops_models::UserName::try_new(user_name) {
-        Ok(_) => self::ValidateUserNameResult::Ok,
-        Err(e) => e.into(),
-    }
+    evops_models::UserName::try_new(user_name).into()
 }
 
 #[derive(uniffi::Enum)]
@@ -29,10 +26,7 @@ enum ValidateEventTitleResult {
 }
 #[uniffi::export]
 fn validate_event_title(event_title: &str) -> self::ValidateEventTitleResult {
-    match evops_models::EventTitle::try_new(event_title) {
-        Ok(_) => self::ValidateEventTitleResult::Ok,
-        Err(e) => e.into(),
-    }
+    evops_models::EventTitle::try_new(event_title).into()
 }
 
 #[derive(uniffi::Enum)]
@@ -43,10 +37,7 @@ enum ValidateEventDescriptionResult {
 }
 #[uniffi::export]
 fn validate_event_description(event_description: &str) -> self::ValidateEventDescriptionResult {
-    match evops_models::EventDescription::try_new(event_description) {
-        Ok(_) => self::ValidateEventDescriptionResult::Ok,
-        Err(e) => e.into(),
-    }
+    evops_models::EventDescription::try_new(event_description).into()
 }
 
 #[derive(uniffi::Enum)]
@@ -58,10 +49,7 @@ enum ValidateTagNameResult {
 }
 #[uniffi::export]
 fn validate_tag_name(tag_name: &str) -> ValidateTagNameResult {
-    match evops_models::TagName::try_new(tag_name) {
-        Ok(_) => self::ValidateTagNameResult::Ok,
-        Err(e) => e.into(),
-    }
+    evops_models::TagName::try_new(tag_name).into()
 }
 
 #[derive(uniffi::Enum)]
@@ -72,8 +60,5 @@ enum ValidateTagAliasResult {
 }
 #[uniffi::export]
 fn validate_tag_alias(tag_alias: &str) -> ValidateTagAliasResult {
-    match evops_models::TagAlias::try_new(tag_alias) {
-        Ok(_) => self::ValidateTagAliasResult::Ok,
-        Err(e) => e.into(),
-    }
+    evops_models::TagAlias::try_new(tag_alias).into()
 }
