@@ -1,0 +1,8 @@
+[package]
+name = "evops-markdown"
+edition = "2024"
+
+[dependencies]
+
+[lints]
+workspace = true
