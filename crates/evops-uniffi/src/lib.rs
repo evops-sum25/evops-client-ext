@@ -62,3 +62,33 @@ enum ValidateTagAliasResult {
 fn validate_tag_alias(tag_alias: &str) -> ValidateTagAliasResult {
     evops_models::TagAlias::try_new(tag_alias).into()
 }
+
+#[uniffi::export]
+fn get_user_name_max_len() -> u8 {
+    evops_models::USER_NAME_MAX_LEN.try_into().unwrap()
+}
+
+#[uniffi::export]
+fn get_event_title_max_len() -> u8 {
+    evops_models::EVENT_TITLE_MAX_LEN.try_into().unwrap()
+}
+
+#[uniffi::export]
+fn get_event_description_max_len() -> u8 {
+    evops_models::EVENT_DESCRIPTION_MAX_LEN.try_into().unwrap()
+}
+
+#[uniffi::export]
+fn get_tag_name_max_len() -> u8 {
+    evops_models::TAG_NAME_MAX_LEN.try_into().unwrap()
+}
+
+#[uniffi::export]
+fn get_tag_name_regex() -> String {
+    evops_models::TAG_NAME_REGEX.to_string()
+}
+
+#[uniffi::export]
+fn get_tag_alias_max_len() -> u8 {
+    evops_models::TAG_ALIAS_MAX_LEN.try_into().unwrap()
+}
