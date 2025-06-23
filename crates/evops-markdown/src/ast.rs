@@ -7,7 +7,7 @@ pub use self::inline_code::MarkdownInlineCode;
 pub use self::link::{MarkdownLink, child::MarkdownLinkChild};
 pub use self::list::{MarkdownList, item::MarkdownListItem};
 pub use self::paragraph::{MarkdownParagraph, child::MarkdownParagraphChild};
-pub use self::root::{MarkdownServiceParseResponse, child::MarkdownRootChild};
+pub use self::root::{MarkdownRoot, child::MarkdownRootChild};
 pub use self::strong::MarkdownStrong;
 pub use self::text::MarkdownText;
 pub use self::thematic_break::MarkdownThematicBreak;

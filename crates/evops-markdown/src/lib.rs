@@ -3,7 +3,7 @@ uniffi::setup_scaffolding!();
 
 use markdown::{Constructs, ParseOptions};
 
-use crate::ast::MarkdownServiceParseResponse;
+use crate::ast::MarkdownRoot;
 
 pub mod ast;
 pub mod unist;
@@ -15,7 +15,7 @@ pub mod pb;
 ///
 /// This function should never panic because Markdown does not have syntax errors.
 #[must_use]
-pub fn parse(text: &str) -> MarkdownServiceParseResponse {
+pub fn parse(text: &str) -> MarkdownRoot {
     let mdast = {
         markdown::to_mdast(text, &parse_options()).expect("CommonMark doesn't have syntax errors")
     };
@@ -23,7 +23,7 @@ pub fn parse(text: &str) -> MarkdownServiceParseResponse {
         unreachable!("when parsing entire documents, we should get a Root element");
     };
 
-    MarkdownServiceParseResponse::try_from(root)
+    MarkdownRoot::try_from(root)
         .expect("document parsed with ParseOptions::default should be CommonMark-compliant")
 }
 
