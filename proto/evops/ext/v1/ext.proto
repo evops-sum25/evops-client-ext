@@ -1,17 +1,7 @@
 syntax = "proto3";
-package evops.markdown.v1;
+package evops.ext.v1;
 
-service MarkdownService {
-  rpc Parse(MarkdownServiceParseRequest) returns (MarkdownServiceParseResponse);
-}
-
-message MarkdownServiceParseRequest {
-  string text = 1;
-}
-
-message MarkdownServiceParseResponse {
-  MarkdownRoot root = 1;
-}
+import "google/protobuf/empty.proto";
 
 message MarkdownRoot {
   repeated MarkdownRootChild children = 1;
@@ -139,4 +129,45 @@ message MarkdownCode {
 
 message MarkdownThematicBreak {
   MarkdownPosition position = 1;
+}
+
+message ValidateUserNameResult {
+  oneof result {
+    google.protobuf.Empty ok = 1;
+    google.protobuf.Empty len_char_max_violated = 2;
+    google.protobuf.Empty not_empty_violated = 3;
+  }
+}
+
+message ValidateEventTitleResult {
+  oneof result {
+    google.protobuf.Empty ok = 1;
+    google.protobuf.Empty len_char_max_violated = 2;
+    google.protobuf.Empty not_empty_violated = 3;
+  }
+}
+
+message ValidateEventDescriptionResult {
+  oneof result {
+    google.protobuf.Empty ok = 1;
+    google.protobuf.Empty len_char_max_violated = 2;
+    google.protobuf.Empty not_empty_violated = 3;
+  }
+}
+
+message ValidateTagNameResult {
+  oneof result {
+    google.protobuf.Empty ok = 1;
+    google.protobuf.Empty len_char_max_violated = 2;
+    google.protobuf.Empty not_empty_violated = 3;
+    google.protobuf.Empty regex_violated = 4;
+  }
+}
+
+message ValidateTagAliasResult {
+  oneof result {
+    google.protobuf.Empty ok = 1;
+    google.protobuf.Empty len_char_max_violated = 2;
+    google.protobuf.Empty not_empty_violated = 3;
+  }
 }

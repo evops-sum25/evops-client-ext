@@ -8,6 +8,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 evops-markdown = { workspace = true, features = ["uniffi"] }
+evops-models = { workspace = true }
 
 uniffi = { workspace = true, features = ["cli"] }
 

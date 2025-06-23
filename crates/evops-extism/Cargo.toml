@@ -8,6 +8,8 @@ crate-type = ["cdylib"]
 
 [dependencies]
 evops-markdown = { workspace = true, features = ["protobuf"] }
+evops-models = { workspace = true }
+evops-pb-ext = { workspace = true }
 
 extism-pdk = { workspace = true, features = ["protobuf"] }
 
