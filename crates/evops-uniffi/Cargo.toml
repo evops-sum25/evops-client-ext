@@ -1,0 +1,15 @@
+[package]
+name = "evops-uniffi"
+edition = "2024"
+
+[lib]
+name = "evops"
+crate-type = ["cdylib"]
+
+[dependencies]
+evops-markdown = { workspace = true, features = ["uniffi"] }
+
+uniffi = { workspace = true, features = ["cli"] }
+
+[lints]
+workspace = true

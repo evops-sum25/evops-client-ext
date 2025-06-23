@@ -1,0 +1,15 @@
+[package]
+name = "evops-extism"
+edition = "2024"
+
+[lib]
+name = "evops"
+crate-type = ["cdylib"]
+
+[dependencies]
+evops-markdown = { workspace = true, features = ["protobuf"] }
+
+extism-pdk = { workspace = true, features = ["protobuf"] }
+
+[lints]
+workspace = true
