@@ -169,8 +169,6 @@ message UserServiceCreateResponse {
 message NewUserForm {
   // **Required**. Display name.
   string name = 1;
-  // URL of profile image (optional).
-  optional string profile_picture_url = 2;
 }
 
 message User {
@@ -178,6 +176,4 @@ message User {
   string id = 1;
   // Display name.
   string name = 2;
-  // URL of profile image (optional).
-  optional string profile_picture_url = 3;
 }

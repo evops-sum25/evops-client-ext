@@ -1,5 +1,4 @@
 use nutype::nutype;
-use url::Url;
 use uuid::Uuid;
 
 #[derive(Debug)]
@@ -33,14 +32,12 @@ pub struct UserServiceCreateResponse {
 #[derive(Debug)]
 pub struct NewUserForm {
     pub name: crate::UserName,
-    pub profile_picture_url: Option<Url>,
 }
 
 #[derive(Debug)]
 pub struct User {
     pub id: crate::UserId,
     pub name: crate::UserName,
-    pub profile_picture_url: Option<Url>,
 }
 
 #[nutype(derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Display))]
