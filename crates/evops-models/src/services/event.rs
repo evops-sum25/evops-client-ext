@@ -14,11 +14,15 @@ pub struct EventServiceFindResponse {
 }
 
 #[derive(Debug)]
-pub struct EventServiceListRequest;
+pub struct EventServiceListRequest {
+    pub last_id: Option<crate::EventId>,
+    pub limit: i64, // CONSIDER: create separate type for it?
+}
 
 #[derive(Debug)]
 pub struct EventServiceListResponse {
     pub events: Vec<crate::Event>,
+    pub last_id: Option<crate::EventId>,
 }
 
 #[derive(Debug)]
