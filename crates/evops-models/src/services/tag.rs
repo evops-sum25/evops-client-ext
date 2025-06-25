@@ -15,7 +15,10 @@ pub struct TagServiceFindResponse {
 }
 
 #[derive(Debug)]
-pub struct TagServiceListRequest;
+pub struct TagServiceListRequest {
+    pub last_id: Option<crate::TagId>,
+    pub limit: Option<crate::PgLimit>,
+}
 
 #[derive(Debug)]
 pub struct TagServiceListResponse {

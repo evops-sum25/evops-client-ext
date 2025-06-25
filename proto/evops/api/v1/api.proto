@@ -63,14 +63,24 @@ message UserServiceFindResponse {
   User user = 1;
 }
 
-message EventServiceListRequest {}
+message EventServiceListRequest {
+  // Id of last event (optional).
+  optional string last_id = 1;
+  // Batch size (optional).
+  optional int64 limit = 2;
+}
 
 message EventServiceListResponse {
   // List of all events.
   repeated Event events = 1;
 }
 
-message TagServiceListRequest {}
+message TagServiceListRequest {
+  // Id of last tag (optional).
+  optional string last_id = 1;
+  // Batch size (optional).
+  optional int64 limit = 2;
+}
 
 message TagServiceListResponse {
   // List of all tags.

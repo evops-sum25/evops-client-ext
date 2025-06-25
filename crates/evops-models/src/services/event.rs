@@ -14,7 +14,10 @@ pub struct EventServiceFindResponse {
 }
 
 #[derive(Debug)]
-pub struct EventServiceListRequest;
+pub struct EventServiceListRequest {
+    pub last_id: Option<crate::EventId>,
+    pub limit: Option<crate::PgLimit>, // CONSIDER: create separate type for it?
+}
 
 #[derive(Debug)]
 pub struct EventServiceListResponse {
