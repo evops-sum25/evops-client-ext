@@ -22,7 +22,6 @@ pub struct EventServiceListRequest {
 #[derive(Debug)]
 pub struct EventServiceListResponse {
     pub events: Vec<crate::Event>,
-    pub last_id: Option<crate::EventId>,
 }
 
 #[derive(Debug)]
