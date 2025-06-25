@@ -64,9 +64,9 @@ message UserServiceFindResponse {
 }
 
 message EventServiceListRequest {
-  // Optional UUID string (empty if unset)
+  // Id of last event (optional).
   optional string last_id = 1;
-  // Optional
+  // Batch size (optional).
   optional int64 limit = 2;
 }
 
@@ -75,7 +75,12 @@ message EventServiceListResponse {
   repeated Event events = 1;
 }
 
-message TagServiceListRequest {}
+message TagServiceListRequest {
+  // Id of last tag (optional).
+  optional string last_id = 1;
+  // Batch size (optional).
+  optional int64 limit = 2;
+}
 
 message TagServiceListResponse {
   // List of all tags.
