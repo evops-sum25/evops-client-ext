@@ -63,7 +63,12 @@ message UserServiceFindResponse {
   User user = 1;
 }
 
-message EventServiceListRequest {}
+message EventServiceListRequest {
+  // Optional UUID string (empty if unset)
+  optional string last_id = 1;
+  // Optional
+  optional int64 limit = 2;
+}
 
 message EventServiceListResponse {
   // List of all events.
