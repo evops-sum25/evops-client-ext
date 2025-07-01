@@ -1,57 +1,72 @@
+use std::io::Cursor;
+
+use bytes::Bytes;
 use chrono::{DateTime, Utc};
+use image::{DynamicImage, ImageReader};
 use nutype::nutype;
-use url::Url;
 use uuid::Uuid;
 
-#[derive(Debug)]
-pub struct EventServiceFindRequest {
-    pub id: crate::EventId,
+use crate::ApiError;
+
+#[nutype(validate(predicate = |_image| true), derive(Debug))]
+pub struct EventImage(DynamicImage);
+
+impl TryFrom<Bytes> for crate::EventImage {
+    type Error = ApiError;
+
+    fn try_from(value: Bytes) -> Result<Self, Self::Error> {
+        let image_raw = {
+            ImageReader::new(Cursor::new(value))
+                .with_guessed_format()
+                .map_err(|e| ApiError::Other(e.to_string()))?
+                .decode()
+                .map_err(|e| ApiError::InvalidArgument(e.to_string()))?
+        };
+
+        Self::try_new(image_raw).map_err(|e| ApiError::InvalidArgument(e.to_string()))
+    }
 }
 
-#[derive(Debug)]
-pub struct EventServiceFindResponse {
-    pub event: crate::Event,
-}
+pub const EVENT_MAX_IMAGES: usize = 10;
+#[nutype(derive(Debug, Clone, Copy, Display))]
+pub struct EventImageId(Uuid);
 
-#[derive(Debug)]
-pub struct EventServiceListRequest {
-    pub last_id: Option<crate::EventId>,
-    pub limit: Option<crate::PgLimit>, // CONSIDER: create separate type for it?
-}
+#[nutype(
+    new_unchecked,
+    validate(predicate = |image_urls| image_urls.len() <= crate::EVENT_MAX_IMAGES),
+    derive(Debug),
+)]
+pub struct EventImageIds(Vec<EventImageId>);
 
-#[derive(Debug)]
-pub struct EventServiceListResponse {
-    pub events: Vec<crate::Event>,
-}
+pub const EVENT_MAX_TAGS: usize = 10;
 
-#[derive(Debug)]
-pub struct EventServiceCreateRequest {
-    pub form: crate::NewEventForm,
-}
+#[nutype(
+    new_unchecked,
+    validate(predicate = |tags| tags.len() <= crate::EVENT_MAX_TAGS),
+    derive(Debug),
+)]
+pub struct EventTags(Vec<crate::Tag>);
 
-#[derive(Debug)]
-pub struct EventServiceCreateResponse {
-    pub event: crate::Event,
-}
+#[nutype(validate(predicate = |tag_ids| tag_ids.len() <= crate::EVENT_MAX_TAGS), derive(Debug))]
+pub struct EventTagIds(Vec<crate::TagId>);
 
 #[derive(Debug)]
 pub struct NewEventForm {
-    pub author_id: crate::UserId,
-    pub image_urls: Option<Vec<Url>>,
     pub title: crate::EventTitle,
     pub description: crate::EventDescription,
-    pub tag_ids: Option<Vec<crate::TagId>>,
+    pub author_id: crate::UserId,
+    pub tag_ids: crate::EventTagIds,
     pub with_attendance: bool,
 }
 
 #[derive(Debug)]
 pub struct Event {
     pub id: crate::EventId,
-    pub author: crate::User,
-    pub image_urls: Vec<Url>,
     pub title: crate::EventTitle,
     pub description: crate::EventDescription,
-    pub tags: Vec<crate::Tag>,
+    pub author: crate::User,
+    pub image_ids: EventImageIds,
+    pub tags: crate::EventTags,
     pub with_attendance: bool,
     pub created_at: DateTime<Utc>,
     pub modified_at: DateTime<Utc>,
@@ -78,6 +93,7 @@ pub const EVENT_DESCRIPTION_MAX_LEN: usize = 5000;
 )]
 pub struct EventDescription(String);
 
+#[allow(clippy::repeat_once)]
 #[cfg(test)]
 mod tests {
     #[test]

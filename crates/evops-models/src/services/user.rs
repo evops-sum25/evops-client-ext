@@ -2,34 +2,6 @@ use nutype::nutype;
 use uuid::Uuid;
 
 #[derive(Debug)]
-pub struct UserServiceFindRequest {
-    pub id: crate::UserId,
-}
-
-#[derive(Debug)]
-pub struct UserServiceFindResponse {
-    pub user: crate::User,
-}
-
-#[derive(Debug)]
-pub struct UserServiceListRequest;
-
-#[derive(Debug)]
-pub struct UserServiceListResponse {
-    pub users: Vec<crate::User>,
-}
-
-#[derive(Debug)]
-pub struct UserServiceCreateRequest {
-    pub form: crate::NewUserForm,
-}
-
-#[derive(Debug)]
-pub struct UserServiceCreateResponse {
-    pub user: crate::User,
-}
-
-#[derive(Debug)]
 pub struct NewUserForm {
     pub name: crate::UserName,
 }
@@ -52,6 +24,7 @@ pub const USER_NAME_MAX_LEN: usize = 64;
 )]
 pub struct UserName(String);
 
+#[allow(clippy::repeat_once)]
 #[cfg(test)]
 mod tests {
     #[test]

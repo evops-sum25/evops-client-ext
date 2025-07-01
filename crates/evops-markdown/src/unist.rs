@@ -1,6 +1,6 @@
 use std::fmt::{self, Debug, Formatter};
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 pub struct MarkdownCoordinate(pub usize);
@@ -20,7 +20,7 @@ impl From<u16> for MarkdownCoordinate {
 #[cfg(feature = "uniffi")]
 uniffi::custom_type!(MarkdownCoordinate, u16);
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Eq)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
@@ -40,7 +40,7 @@ impl From<markdown::unist::Point> for MarkdownPoint {
     }
 }
 
-#[derive(PartialEq)]
+#[derive(PartialEq, Eq)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "serde", derive(serde::Serialize))]
 #[cfg_attr(feature = "uniffi", derive(uniffi::Record))]
