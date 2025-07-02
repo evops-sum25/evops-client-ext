@@ -70,3 +70,50 @@ pub const TAG_ALIAS_MAX_LEN: usize = TAG_NAME_MAX_LEN;
     derive(Debug, PartialEq, Eq, AsRef, Hash, Display),
 )]
 pub struct TagAlias(String);
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn tag_name() {
+        assert_eq!(
+            crate::TagName::try_new(""),
+            Err(crate::TagNameError::NotEmptyViolated),
+        );
+        assert!(crate::TagName::try_new("a".repeat(1)).is_ok());
+        assert!(crate::TagName::try_new("a".repeat(32)).is_ok());
+        assert_eq!(
+            crate::TagName::try_new("a".repeat(33)),
+            Err(crate::TagNameError::LenCharMaxViolated),
+        );
+        assert!(crate::TagName::try_new("just-a-normal-tag").is_ok());
+        assert!(crate::TagName::try_new("a--111-821ar-st-b238---").is_ok());
+        assert!(crate::TagName::try_new("8-----").is_ok());
+        assert!(crate::TagName::try_new("88005553535").is_ok());
+        assert_eq!(
+            crate::TagName::try_new("-a--111-821ar-st-b238---"),
+            Err(crate::TagNameError::RegexViolated),
+        );
+        assert_eq!(
+            crate::TagName::try_new("two words"),
+            Err(crate::TagNameError::RegexViolated),
+        );
+    }
+
+    #[test]
+    fn tag_alias() {
+        assert_eq!(
+            crate::TagAlias::try_new(""),
+            Err(crate::TagAliasError::NotEmptyViolated),
+        );
+        assert!(crate::TagAlias::try_new("a".repeat(1)).is_ok());
+        assert!(crate::TagAlias::try_new("a".repeat(32)).is_ok());
+        assert_eq!(
+            crate::TagAlias::try_new("a".repeat(33)),
+            Err(crate::TagAliasError::LenCharMaxViolated),
+        );
+        assert!(crate::TagAlias::try_new("just-a-normal-tag").is_ok());
+        assert!(crate::TagAlias::try_new("a--111-821ar-st-b238---").is_ok());
+        assert!(crate::TagAlias::try_new("8-----").is_ok());
+        assert!(crate::TagAlias::try_new("88005553535").is_ok());
+    }
+}

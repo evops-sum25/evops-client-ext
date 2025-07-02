@@ -77,3 +77,34 @@ pub const EVENT_DESCRIPTION_MAX_LEN: usize = 5000;
     derive(Debug, PartialEq, Eq, AsRef, Hash)
 )]
 pub struct EventDescription(String);
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn event_title() {
+        assert_eq!(
+            crate::EventTitle::try_new(""),
+            Err(crate::EventTitleError::NotEmptyViolated),
+        );
+        assert!(crate::EventTitle::try_new("a".repeat(1)).is_ok());
+        assert!(crate::EventTitle::try_new("a".repeat(64)).is_ok());
+        assert_eq!(
+            crate::EventTitle::try_new("a".repeat(65)),
+            Err(crate::EventTitleError::LenCharMaxViolated),
+        );
+    }
+
+    #[test]
+    fn event_description() {
+        assert_eq!(
+            crate::EventDescription::try_new(""),
+            Err(crate::EventDescriptionError::NotEmptyViolated),
+        );
+        assert!(crate::EventDescription::try_new("a".repeat(1)).is_ok());
+        assert!(crate::EventDescription::try_new("a".repeat(5000)).is_ok());
+        assert_eq!(
+            crate::EventDescription::try_new("a".repeat(5001)),
+            Err(crate::EventDescriptionError::LenCharMaxViolated),
+        );
+    }
+}

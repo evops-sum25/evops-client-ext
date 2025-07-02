@@ -51,3 +51,20 @@ pub const USER_NAME_MAX_LEN: usize = 64;
     derive(Debug, PartialEq, Eq, AsRef, Hash),
 )]
 pub struct UserName(String);
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn user_name() {
+        assert_eq!(
+            crate::UserName::try_new(""),
+            Err(crate::UserNameError::NotEmptyViolated),
+        );
+        assert!(crate::UserName::try_new("a".repeat(1)).is_ok());
+        assert!(crate::UserName::try_new("a".repeat(64)).is_ok());
+        assert_eq!(
+            crate::UserName::try_new("a".repeat(65)),
+            Err(crate::UserNameError::LenCharMaxViolated),
+        );
+    }
+}

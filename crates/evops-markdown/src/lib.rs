@@ -43,3 +43,80 @@ pub fn parse_options() -> ParseOptions {
         ..Default::default()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::ast::{
+        MarkdownParagraph, MarkdownParagraphChild, MarkdownRoot, MarkdownRootChild, MarkdownText,
+    };
+    use crate::unist::{MarkdownCoordinate, MarkdownPoint, MarkdownPosition};
+
+    #[test]
+    fn markdown() {
+        assert_eq!(
+            crate::parse(""),
+            MarkdownRoot {
+                children: Vec::default(),
+                position: MarkdownPosition {
+                    start: MarkdownPoint {
+                        line: MarkdownCoordinate(1),
+                        column: MarkdownCoordinate(1),
+                        offset: MarkdownCoordinate(0),
+                    },
+                    end: MarkdownPoint {
+                        line: MarkdownCoordinate(1),
+                        column: MarkdownCoordinate(1),
+                        offset: MarkdownCoordinate(0),
+                    },
+                },
+            },
+        );
+
+        assert_eq!(
+            crate::parse("Hello, world!"),
+            MarkdownRoot {
+                children: vec![MarkdownRootChild::Paragraph(MarkdownParagraph {
+                    children: vec![MarkdownParagraphChild::Text(MarkdownText {
+                        value: "Hello, world!".to_owned(),
+                        position: MarkdownPosition {
+                            start: MarkdownPoint {
+                                line: MarkdownCoordinate(1),
+                                column: MarkdownCoordinate(1),
+                                offset: MarkdownCoordinate(0),
+                            },
+                            end: MarkdownPoint {
+                                line: MarkdownCoordinate(1),
+                                column: MarkdownCoordinate(14),
+                                offset: MarkdownCoordinate(13),
+                            },
+                        },
+                    })],
+                    position: MarkdownPosition {
+                        start: MarkdownPoint {
+                            line: MarkdownCoordinate(1),
+                            column: MarkdownCoordinate(1),
+                            offset: MarkdownCoordinate(0),
+                        },
+                        end: MarkdownPoint {
+                            line: MarkdownCoordinate(1),
+                            column: MarkdownCoordinate(14),
+                            offset: MarkdownCoordinate(13),
+                        },
+                    },
+                })],
+                position: MarkdownPosition {
+                    start: MarkdownPoint {
+                        line: MarkdownCoordinate(1),
+                        column: MarkdownCoordinate(1),
+                        offset: MarkdownCoordinate(0),
+                    },
+                    end: MarkdownPoint {
+                        line: MarkdownCoordinate(1),
+                        column: MarkdownCoordinate(14),
+                        offset: MarkdownCoordinate(13),
+                    },
+                },
+            },
+        );
+    }
+}
