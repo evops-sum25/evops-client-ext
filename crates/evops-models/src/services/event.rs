@@ -6,9 +6,9 @@ use image::{DynamicImage, ImageReader};
 use nutype::nutype;
 use uuid::Uuid;
 
-use crate::ApiError;
+use crate::{ApiError, ApiResult};
 
-#[nutype(validate(predicate = |_image| true), derive(Debug))]
+#[nutype(validate(predicate = |_image| true), derive(Debug, AsRef))]
 pub struct EventImage(DynamicImage);
 
 impl TryFrom<Bytes> for crate::EventImage {
@@ -22,8 +22,19 @@ impl TryFrom<Bytes> for crate::EventImage {
                 .decode()
                 .map_err(|e| ApiError::InvalidArgument(e.to_string()))?
         };
-
         Self::try_new(image_raw).map_err(|e| ApiError::InvalidArgument(e.to_string()))
+    }
+}
+
+impl crate::EventImage {
+    pub fn encode_as_webp(&self) -> ApiResult<Bytes> {
+        let webp_image = {
+            webp::Encoder::from_image(self.as_ref())
+                .map_err(|e| ApiError::InvalidArgument(e.to_string()))?
+                .encode_lossless()
+        };
+        let encoded = Bytes::copy_from_slice(&webp_image);
+        Ok(encoded)
     }
 }
 

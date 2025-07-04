@@ -28,6 +28,7 @@ tonic = "0.13.1"
 uniffi = "0.29.2"
 url = "2.5.4"
 uuid = "1.17.0"
+webp = "0.3.0"
 
 [workspace.lints.clippy]
 all = "warn"

@@ -16,6 +16,7 @@ regex = { workspace = true }
 thiserror = { workspace = true }
 tonic = { workspace = true, optional = true }
 uuid = { workspace = true }
+webp = { workspace = true }
 
 [features]
 axum = ["dep:axum"]
