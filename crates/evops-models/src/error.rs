@@ -15,6 +15,7 @@ pub enum ApiError {
     AlreadyExists(String),
     #[error(transparent)]
     Db(#[from] diesel::result::Error),
+    Storage(String),
     Other(String),
 }
 
@@ -28,6 +29,7 @@ impl axum::response::IntoResponse for ApiError {
             ApiError::NotFound(e) => (StatusCode::NOT_FOUND, e),
             ApiError::AlreadyExists(e) => (StatusCode::CONFLICT, e),
             ApiError::Db(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()),
+            ApiError::Storage(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()),
             ApiError::Other(e) => (StatusCode::INTERNAL_SERVER_ERROR, e),
         }
         .into_response()
@@ -42,6 +44,7 @@ impl From<ApiError> for tonic::Status {
             ApiError::NotFound(e) => Self::not_found(e),
             ApiError::AlreadyExists(e) => Self::already_exists(e),
             ApiError::Db(e) => Self::internal(e.to_string()),
+            ApiError::Storage(e) => Self::internal(e.to_string()),
             ApiError::Other(e) => Self::unknown(e),
         }
     }

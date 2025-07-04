@@ -5,32 +5,64 @@ import "google/protobuf/timestamp.proto";
 
 // Manages event-related operations.
 service EventService {
-  // Retrieves a single event by ID.
-  rpc Find(EventServiceFindRequest) returns (EventServiceFindResponse);
   // Lists all events.
   rpc List(EventServiceListRequest) returns (EventServiceListResponse);
   // Creates a new event.
   rpc Create(EventServiceCreateRequest) returns (EventServiceCreateResponse);
+  // Retrieves a single event by ID.
+  rpc Find(EventServiceFindRequest) returns (EventServiceFindResponse);
+  // Adds a new image to the event with the specified ID.
+  rpc PushImage(stream EventServicePushImageRequest)
+      returns (EventServicePushImageResponse);
+  // Retrieves an event image by ID.
+  rpc FindImage(EventServiceFindImageRequest)
+      returns (stream EventServiceFindImageResponse);
 }
 
 // Manages event tags.
 service TagService {
-  // Retrieves a tag by ID.
-  rpc Find(TagServiceFindRequest) returns (TagServiceFindResponse);
   // Lists all tags.
   rpc List(TagServiceListRequest) returns (TagServiceListResponse);
   // Creates a new tag.
   rpc Create(TagServiceCreateRequest) returns (TagServiceCreateResponse);
+  // Retrieves a tag by ID.
+  rpc Find(TagServiceFindRequest) returns (TagServiceFindResponse);
 }
 
 // Manages user accounts.
 service UserService {
-  // Retrieves a user by ID.
-  rpc Find(UserServiceFindRequest) returns (UserServiceFindResponse);
   // Lists all users.
   rpc List(UserServiceListRequest) returns (UserServiceListResponse);
   // Creates a new user.
   rpc Create(UserServiceCreateRequest) returns (UserServiceCreateResponse);
+  // Retrieves a user by ID.
+  rpc Find(UserServiceFindRequest) returns (UserServiceFindResponse);
+}
+
+message EventServiceFindImageRequest {
+  // UUID of the event image to retrieve.
+  string image_id = 1;
+}
+
+message EventServiceFindImageResponse {
+  bytes chunk = 1;
+}
+
+message EventImageMetadata {
+  // UUID of the event to add an image to.
+  string event_id = 1;
+}
+
+message EventServicePushImageRequest {
+  oneof message {
+    EventImageMetadata metadata = 1;
+    bytes chunk = 2;
+  }
+}
+
+message EventServicePushImageResponse {
+  // ID of the added image.
+  string image_id = 1;
 }
 
 message EventServiceFindRequest {
@@ -100,36 +132,34 @@ message EventServiceCreateRequest {
 }
 
 message EventServiceCreateResponse {
-  // Created event object.
-  Event event = 1;
+  // ID of the created event.
+  string event_id = 1;
 }
 
 message NewEventForm {
-  // **Required**. UUID of the creating user.
-  string author_id = 1;
-  // URLs of event images.
-  repeated string image_urls = 2;
   // **Required**. Event title.
-  string title = 3;
+  string title = 1;
+  // **Required**. UUID of the creating user.
+  string author_id = 2;
   // **Required**. Detailed description.
-  string description = 4;
+  string description = 3;
   // UUIDs of associated tags.
-  repeated string tag_ids = 5;
+  repeated string tag_ids = 4;
   // Whether to enable attendance tracking.
-  bool with_attendance = 6;
+  bool with_attendance = 5;
 }
 
 message Event {
   // Event UUID.
   string id = 1;
-  // User who created the event.
-  User author = 2;
-  // URLs of event images.
-  repeated string image_urls = 3;
   // Event title.
-  string title = 4;
+  string title = 2;
+  // User who created the event.
+  User author = 3;
   // Detailed description.
-  string description = 5;
+  string description = 4;
+  // UUIDs of event images.
+  repeated string image_ids = 5;
   // Associated tags.
   repeated Tag tags = 6;
   // Whether attendance tracking is enabled.
@@ -146,8 +176,8 @@ message TagServiceCreateRequest {
 }
 
 message TagServiceCreateResponse {
-  // Created tag object.
-  Tag tag = 1;
+  // ID of the created tag.
+  string tag_id = 1;
 }
 
 message NewTagForm {
@@ -172,8 +202,8 @@ message UserServiceCreateRequest {
 }
 
 message UserServiceCreateResponse {
-  // Created user object.
-  User user = 1;
+  // ID of the created user.
+  string user_id = 1;
 }
 
 message NewUserForm {

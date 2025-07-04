@@ -4,48 +4,25 @@ use nutype::nutype;
 use regex::Regex;
 use uuid::Uuid;
 
-#[derive(Debug)]
-pub struct TagServiceFindRequest {
-    pub id: crate::TagId,
-}
-
-#[derive(Debug)]
-pub struct TagServiceFindResponse {
-    pub tag: crate::Tag,
-}
-
-#[derive(Debug)]
-pub struct TagServiceListRequest {
-    pub last_id: Option<crate::TagId>,
-    pub limit: Option<crate::PgLimit>,
-}
-
-#[derive(Debug)]
-pub struct TagServiceListResponse {
-    pub tags: Vec<crate::Tag>,
-}
-
-#[derive(Debug)]
-pub struct TagServiceCreateRequest {
-    pub form: crate::NewTagForm,
-}
-
-#[derive(Debug)]
-pub struct TagServiceCreateResponse {
-    pub tag: crate::Tag,
-}
+pub const TAG_MAX_ALIASES: usize = 50;
+#[nutype(
+    new_unchecked,
+    validate(predicate = |tag_aliases| tag_aliases.len() <= crate::TAG_MAX_ALIASES),
+    derive(Debug, AsRef),
+)]
+pub struct TagAliases(Vec<crate::TagAlias>);
 
 #[derive(Debug)]
 pub struct NewTagForm {
     pub name: crate::TagName,
-    pub aliases: Option<Vec<crate::TagAlias>>,
+    pub aliases: TagAliases,
 }
 
 #[derive(Debug)]
 pub struct Tag {
     pub id: crate::TagId,
     pub name: crate::TagName,
-    pub aliases: Vec<crate::TagAlias>,
+    pub aliases: TagAliases,
 }
 
 #[nutype(derive(Debug, Clone, Copy, Debug, PartialEq, Eq, Hash, Display))]
@@ -71,6 +48,7 @@ pub const TAG_ALIAS_MAX_LEN: usize = TAG_NAME_MAX_LEN;
 )]
 pub struct TagAlias(String);
 
+#[allow(clippy::repeat_once)]
 #[cfg(test)]
 mod tests {
     #[test]

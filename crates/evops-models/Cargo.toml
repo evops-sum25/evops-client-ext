@@ -5,15 +5,18 @@ edition = "2024"
 [dependencies]
 aide = { workspace = true, optional = true, features = ["macros"] }
 axum = { workspace = true, optional = true }
+bytes = { workspace = true }
 chrono = { workspace = true }
 diesel = { workspace = true }
 eyre = { workspace = true }
+image = { workspace = true, features = ["avif-native"] }
+minio = { workspace = true }
 nutype = { workspace = true, features = ["new_unchecked", "regex"] }
 regex = { workspace = true }
 thiserror = { workspace = true }
 tonic = { workspace = true, optional = true }
-url = { workspace = true }
 uuid = { workspace = true }
+webp = { workspace = true }
 
 [features]
 axum = ["dep:axum"]
