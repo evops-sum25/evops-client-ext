@@ -27,6 +27,8 @@ service TagService {
   rpc Create(TagServiceCreateRequest) returns (TagServiceCreateResponse);
   // Retrieves a tag by ID.
   rpc Find(TagServiceFindRequest) returns (TagServiceFindResponse);
+  // Get relevant tag IDs for an event description.
+  rpc GetTagsByDescription(TagServiceGetTagsByDescriptionRequest) returns (TagServiceGetTagsByDescriptionResponse);
 }
 
 // Manages user accounts.
@@ -37,6 +39,16 @@ service UserService {
   rpc Create(UserServiceCreateRequest) returns (UserServiceCreateResponse);
   // Retrieves a user by ID.
   rpc Find(UserServiceFindRequest) returns (UserServiceFindResponse);
+}
+
+message TagServiceGetTagsByDescriptionRequest {
+  // Description to predict tags for.
+  string description = 1;
+}
+
+message TagServiceGetTagsByDescriptionResponse {
+  // A list of predicted tag IDs for a description.
+  repeated string tag_ids = 1;
 }
 
 message EventServiceFindImageRequest {
