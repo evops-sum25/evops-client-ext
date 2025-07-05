@@ -11,21 +11,21 @@ aide = "0.15.0"
 axum = "0.8.4"
 bytes = "1.10.1"
 chrono = "0.4.41"
-diesel = { version = "2.2.10", features = ["without-deprecated"] }
+diesel = { version = "2.2.11", features = ["without-deprecated"] }
 extism-pdk = { version = "1.4.1", default-features = false }
 eyre = "0.6.12"
 image = "0.25.6"
 markdown = "1.0.0"
 minio = "0.3.0"
 nutype = "0.6.1"
-prost = "0.13.5"
-prost-build = "0.13.5"
+prost = "0.13.5"                                                   # 0.14.1
+prost-build = "0.13.5"                                             # 0.14.1
 regex = "1.11.1"
-schemars = { version = "0.9.0", features = ["preserve_order"] }
+schemars = { version = "0.9.0", features = ["preserve_order"] }    # 1.0.3
 serde = "1.0.219"
 thiserror = "2.0.12"
 tonic = "0.13.1"
-uniffi = "0.29.2"
+uniffi = "0.29.3"
 url = "2.5.4"
 uuid = "1.17.0"
 webp = "0.3.0"
