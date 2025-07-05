@@ -17,6 +17,14 @@ pub enum ApiError {
     Db(#[from] diesel::result::Error),
     Storage(String),
     Other(String),
+    #[error("gRPC connection error: {0}")]
+    GrpcConnection(String),
+    #[error("gRPC request failed: {0}")]
+    GrpcRequest(String),
+    #[error("gRPC timeout after retries")]
+    GrpcTimeout,
+    #[error("Invalid gRPC response: {0}")]
+    GrpcResponse(String),
 }
 
 #[cfg(feature = "axum")]
@@ -31,6 +39,13 @@ impl axum::response::IntoResponse for ApiError {
             ApiError::Db(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()),
             ApiError::Storage(e) => (StatusCode::INTERNAL_SERVER_ERROR, e.to_string()),
             ApiError::Other(e) => (StatusCode::INTERNAL_SERVER_ERROR, e),
+            ApiError::GrpcConnection(e) => (StatusCode::BAD_GATEWAY, e),
+            ApiError::GrpcRequest(e) => (StatusCode::BAD_GATEWAY, e),
+            ApiError::GrpcTimeout => (
+                StatusCode::GATEWAY_TIMEOUT,
+                "gRPC timeout after retries".to_string(),
+            ),
+            ApiError::GrpcResponse(e) => (StatusCode::BAD_GATEWAY, e),
         }
         .into_response()
     }
@@ -46,6 +61,26 @@ impl From<ApiError> for tonic::Status {
             ApiError::Db(e) => Self::internal(e.to_string()),
             ApiError::Storage(e) => Self::internal(e.to_string()),
             ApiError::Other(e) => Self::unknown(e),
+            ApiError::GrpcConnection(e) => Self::unavailable(e),
+            ApiError::GrpcRequest(e) => Self::internal(e),
+            ApiError::GrpcTimeout => Self::deadline_exceeded("gRPC timeout after retries"),
+            ApiError::GrpcResponse(e) => Self::invalid_argument(e),
         }
+    }
+}
+
+impl From<tonic::transport::Error> for ApiError {
+    fn from(err: tonic::transport::Error) -> Self {
+        ApiError::GrpcConnection(format!("Transport error: {}", err))
+    }
+}
+
+impl From<tonic::Status> for ApiError {
+    fn from(status: tonic::Status) -> Self {
+        ApiError::GrpcRequest(format!(
+            "gRPC status: {} - {}",
+            status.code(),
+            status.message()
+        ))
     }
 }
