@@ -69,12 +69,14 @@ impl From<ApiError> for tonic::Status {
     }
 }
 
+#[cfg(feature = "tonic")]
 impl From<tonic::transport::Error> for ApiError {
     fn from(err: tonic::transport::Error) -> Self {
         ApiError::GrpcConnection(format!("Transport error: {}", err))
     }
 }
 
+#[cfg(feature = "tonic")]
 impl From<tonic::Status> for ApiError {
     fn from(status: tonic::Status) -> Self {
         ApiError::GrpcRequest(format!(
