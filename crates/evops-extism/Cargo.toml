@@ -3,14 +3,13 @@ name = "evops-extism"
 edition = "2024"
 
 [lib]
-name = "evops"
 crate-type = ["cdylib"]
+name = "evops"
 
 [dependencies]
 evops-markdown = { workspace = true, features = ["protobuf"] }
 evops-models = { workspace = true }
 evops-pb-ext = { workspace = true }
-
 extism-pdk = { workspace = true, features = ["protobuf"] }
 
 [lints]

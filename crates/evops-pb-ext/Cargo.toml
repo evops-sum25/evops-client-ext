@@ -4,9 +4,7 @@ edition = "2024"
 
 [dependencies]
 evops-models = { workspace = true }
-
-# Needed by build.rs.
-prost = { workspace = true }
+prost = { workspace = true }  # Needed by build.rs.
 
 [build-dependencies]
 prost-build = { workspace = true }

@@ -3,13 +3,12 @@ name = "evops-uniffi"
 edition = "2024"
 
 [lib]
-name = "evops"
 crate-type = ["cdylib"]
+name = "evops"
 
 [dependencies]
 evops-markdown = { workspace = true, features = ["uniffi"] }
 evops-models = { workspace = true }
-
 uniffi = { workspace = true, features = ["cli"] }
 
 [lints]

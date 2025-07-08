@@ -3,7 +3,7 @@ name = "evops-models"
 edition = "2024"
 
 [dependencies]
-aide = { workspace = true, optional = true, features = ["macros"] }
+aide = { workspace = true, features = ["macros"], optional = true }
 axum = { workspace = true, optional = true }
 bytes = { workspace = true }
 chrono = { workspace = true }
@@ -21,8 +21,8 @@ uuid = { workspace = true }
 webp = { workspace = true }
 
 [features]
-axum = ["dep:axum"]
 aide = ["axum", "dep:aide"]
+axum = ["dep:axum"]
 tonic = ["dep:tonic"]
 
 [lints]

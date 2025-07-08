@@ -4,16 +4,15 @@ edition = "2024"
 
 [dependencies]
 evops-pb-ext = { workspace = true, optional = true }
-
 markdown = { workspace = true }
 schemars = { workspace = true, optional = true }
-serde = { workspace = true, optional = true, features = ["derive"] }
+serde = { workspace = true, features = ["derive"], optional = true }
 thiserror = { workspace = true }
 uniffi = { workspace = true, optional = true }
 
 [features]
 protobuf = ["dep:evops-pb-ext"]
-schemars = ["serde", "dep:schemars"]
+schemars = ["dep:schemars", "serde"]
 serde = ["dep:serde"]
 uniffi = ["dep:uniffi"]
 
