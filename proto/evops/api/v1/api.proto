@@ -19,6 +19,11 @@ service EventService {
       returns (stream EventServiceFindImageResponse);
 }
 
+service LanguageService {
+  // Adds a new language to the system.
+  rpc Add(LanguageServiceAddRequest) returns (LanguageServiceAddResponse);
+}
+
 // Manages event tags.
 service TagService {
   // Lists all tags.
@@ -28,7 +33,8 @@ service TagService {
   // Retrieves a tag by ID.
   rpc Find(TagServiceFindRequest) returns (TagServiceFindResponse);
   // Get relevant tag IDs for an event description.
-  rpc GetTagsByDescription(TagServiceGetTagsByDescriptionRequest) returns (TagServiceGetTagsByDescriptionResponse);
+  rpc GetTagsByDescription(TagServiceGetTagsByDescriptionRequest)
+      returns (TagServiceGetTagsByDescriptionResponse);
 }
 
 // Manages user accounts.
@@ -39,6 +45,16 @@ service UserService {
   rpc Create(UserServiceCreateRequest) returns (UserServiceCreateResponse);
   // Retrieves a user by ID.
   rpc Find(UserServiceFindRequest) returns (UserServiceFindResponse);
+}
+
+message LanguageServiceAddRequest {
+  // Name of the new language.
+  string name = 1;
+}
+
+message LanguageServiceAddResponse {
+  // UUID of the added language.
+  string language_id = 1;
 }
 
 message TagServiceGetTagsByDescriptionRequest {
