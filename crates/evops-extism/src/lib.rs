@@ -1,6 +1,6 @@
 #![allow(clippy::unnecessary_wraps)]
 
-use extism_pdk::{FnResult, Prost};
+use extism_pdk::{FnResult, Json, Prost};
 
 use evops_pb_ext::{
     MarkdownRoot, ValidateEventDescriptionResult, ValidateEventTitleResult, ValidateTagAliasResult,
@@ -42,31 +42,31 @@ pub fn validate_tag_alias(tag_alias: String) -> FnResult<Prost<ValidateTagAliasR
 }
 
 #[extism_pdk::plugin_fn]
-pub fn get_user_name_max_len() -> FnResult<u32> {
-    Ok(evops_models::USER_NAME_MAX_LEN.try_into().unwrap())
+pub fn get_user_name_max_len() -> FnResult<Json<usize>> {
+    Ok(Json(evops_models::USER_NAME_MAX_LEN))
 }
 
 #[extism_pdk::plugin_fn]
-pub fn get_event_title_max_len() -> FnResult<u32> {
-    Ok(evops_models::EVENT_TITLE_MAX_LEN.try_into().unwrap())
+pub fn get_event_title_max_len() -> FnResult<Json<usize>> {
+    Ok(Json(evops_models::EVENT_TITLE_MAX_LEN))
 }
 
 #[extism_pdk::plugin_fn]
-pub fn get_event_description_max_len() -> FnResult<u32> {
-    Ok(evops_models::EVENT_DESCRIPTION_MAX_LEN.try_into().unwrap())
+pub fn get_event_description_max_len() -> FnResult<Json<usize>> {
+    Ok(Json(evops_models::EVENT_DESCRIPTION_MAX_LEN))
 }
 
 #[extism_pdk::plugin_fn]
-pub fn get_tag_name_max_len() -> FnResult<u32> {
-    Ok(evops_models::TAG_NAME_MAX_LEN.try_into().unwrap())
+pub fn get_tag_name_max_len() -> FnResult<Json<usize>> {
+    Ok(Json(evops_models::TAG_NAME_MAX_LEN))
 }
 
 #[extism_pdk::plugin_fn]
-pub fn get_tag_name_regex() -> FnResult<String> {
-    Ok(evops_models::TAG_NAME_REGEX.to_string())
+pub fn get_tag_name_regex() -> FnResult<Json<String>> {
+    Ok(Json(evops_models::TAG_NAME_REGEX.to_string()))
 }
 
 #[extism_pdk::plugin_fn]
-pub fn get_tag_alias_max_len() -> FnResult<u32> {
-    Ok(evops_models::TAG_ALIAS_MAX_LEN.try_into().unwrap())
+pub fn get_tag_alias_max_len() -> FnResult<Json<usize>> {
+    Ok(Json(evops_models::TAG_ALIAS_MAX_LEN))
 }
