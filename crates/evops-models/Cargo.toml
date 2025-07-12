@@ -5,24 +5,25 @@ edition = "2024"
 [dependencies]
 aide = { workspace = true, features = ["macros"], optional = true }
 axum = { workspace = true, optional = true }
-bytes = { workspace = true }
-chrono = { workspace = true }
+bytes = { workspace = true, optional = true }
+chrono = { workspace = true, optional = true }
 diesel = { workspace = true }
-eyre = { workspace = true }
 image = { workspace = true, features = [
   # "avif-native",
-] }
-minio = { workspace = true }
+], optional = true }
 nutype = { workspace = true, features = ["new_unchecked", "regex"] }
 regex = { workspace = true }
 thiserror = { workspace = true }
 tonic = { workspace = true, optional = true }
 uuid = { workspace = true }
-webp = { workspace = true }
+webp = { workspace = true, optional = true }
 
 [features]
 aide = ["axum", "dep:aide"]
 axum = ["dep:axum"]
+chrono = ["dep:chrono"]
+default = ["chrono", "image"]
+image = ["dep:bytes", "dep:image", "dep:webp"]
 tonic = ["dep:tonic"]
 
 [lints]

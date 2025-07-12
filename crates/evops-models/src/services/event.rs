@@ -1,42 +1,8 @@
-use std::io::Cursor;
-
-use bytes::Bytes;
-use chrono::{DateTime, Utc};
-use image::{DynamicImage, ImageReader};
 use nutype::nutype;
 use uuid::Uuid;
 
-use crate::{ApiError, ApiResult};
-
-#[nutype(validate(predicate = |_image| true), derive(Debug, AsRef))]
-pub struct EventImage(DynamicImage);
-
-impl TryFrom<Bytes> for crate::EventImage {
-    type Error = ApiError;
-
-    fn try_from(value: Bytes) -> Result<Self, Self::Error> {
-        let image_raw = {
-            ImageReader::new(Cursor::new(value))
-                .with_guessed_format()
-                .map_err(|e| ApiError::Other(e.to_string()))?
-                .decode()
-                .map_err(|e| ApiError::InvalidArgument(e.to_string()))?
-        };
-        Self::try_new(image_raw).map_err(|e| ApiError::InvalidArgument(e.to_string()))
-    }
-}
-
-impl crate::EventImage {
-    pub fn encode_as_webp(&self) -> ApiResult<Bytes> {
-        let webp_image = {
-            webp::Encoder::from_image(self.as_ref())
-                .map_err(|e| ApiError::InvalidArgument(e.to_string()))?
-                .encode_lossless()
-        };
-        let encoded = Bytes::copy_from_slice(&webp_image);
-        Ok(encoded)
-    }
-}
+#[cfg(feature = "image")]
+pub mod image;
 
 pub const EVENT_MAX_IMAGES: usize = 10;
 #[nutype(derive(Debug, Clone, Copy, Display))]
@@ -79,8 +45,10 @@ pub struct Event {
     pub image_ids: EventImageIds,
     pub tags: crate::EventTags,
     pub with_attendance: bool,
-    pub created_at: DateTime<Utc>,
-    pub modified_at: DateTime<Utc>,
+    #[cfg(feature = "chrono")]
+    pub created_at: chrono::DateTime<chrono::Utc>,
+    #[cfg(feature = "chrono")]
+    pub modified_at: chrono::DateTime<chrono::Utc>,
 }
 
 #[nutype(derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Display))]

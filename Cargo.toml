@@ -9,13 +9,11 @@ bytes = "1.10.1"
 chrono = "0.4.41"
 diesel = { version = "2.2.11", features = ["without-deprecated"] }
 evops-markdown = { path = "crates/evops-markdown/" }
-evops-models = { path = "crates/evops-models/" }
+evops-models = { default-features = false, path = "crates/evops-models/" }
 evops-pb-ext = { path = "crates/evops-pb-ext/" }
 extism-pdk = { version = "1.4.1", default-features = false }
-eyre = "0.6.12"
 image = "0.25.6"
 markdown = "1.0.0"
-minio = "0.3.0"
 nutype = "0.6.1"
 prost = "0.13.5"  # 0.14.1
 prost-build = "0.13.5"  # 0.14.1
