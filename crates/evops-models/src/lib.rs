@@ -5,7 +5,7 @@ pub use self::services::event::{
     EVENT_DESCRIPTION_MAX_LEN, EVENT_DESCRIPTION_MIN_LEN, EVENT_MAX_IMAGES, EVENT_MAX_TAGS,
     EVENT_TITLE_MAX_LEN, EVENT_TITLE_MIN_LEN, Event, EventDescription, EventDescriptionError,
     EventId, EventImageId, EventImageIds, EventImageIdsError, EventTagIds, EventTagIdsError,
-    EventTags, EventTagsError, EventTitle, EventTitleError, NewEventForm,
+    EventTags, EventTagsError, EventTitle, EventTitleError, NewEventForm, UpdateEventForm,
 };
 pub use self::services::tag::{
     NewTagForm, TAG_ALIAS_MAX_LEN, TAG_ALIAS_MIN_LEN, TAG_MAX_ALIASES, TAG_NAME_MAX_LEN,

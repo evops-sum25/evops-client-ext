@@ -37,6 +37,14 @@ pub struct NewEventForm {
 }
 
 #[derive(Debug)]
+pub struct UpdateEventForm {
+    pub title: Option<crate::EventTitle>,
+    pub description: Option<crate::EventDescription>,
+    pub tag_ids: Option<crate::EventTagIds>,
+    pub track_attendance: Option<bool>,
+}
+
+#[derive(Debug)]
 pub struct Event {
     pub id: crate::EventId,
     pub title: crate::EventTitle,
