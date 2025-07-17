@@ -8,3 +8,7 @@ pub struct LanguageName(String);
 
 #[nutype(derive(Debug))]
 pub struct LanguageId(Uuid);
+
+pub struct NewLanguageForm {
+    pub name: LanguageName,
+}
