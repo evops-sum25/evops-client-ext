@@ -11,12 +11,28 @@ service EventService {
   rpc Create(EventServiceCreateRequest) returns (EventServiceCreateResponse);
   // Retrieves a single event by ID.
   rpc Find(EventServiceFindRequest) returns (EventServiceFindResponse);
+  // Updates an event by ID.
+  rpc Update(EventServiceUpdateRequest) returns (EventServiceUpdateResponse);
+  // Deletes an event by ID.
+  rpc Delete(EventServiceDeleteRequest) returns (EventServiceDeleteResponse);
+  // Reorders images of an event according to a new list.
+  rpc ReorderImages(EventServiceReorderImagesRequest)
+      returns (EventServiceReorderImagesResponse);
   // Adds a new image to the event with the specified ID.
   rpc PushImage(stream EventServicePushImageRequest)
       returns (EventServicePushImageResponse);
   // Retrieves an event image by ID.
   rpc FindImage(EventServiceFindImageRequest)
       returns (stream EventServiceFindImageResponse);
+  // Deletes an event image by ID.
+  // If there are images to the right, they are shifted one position back.
+  rpc DeleteImage(EventServiceDeleteImageRequest)
+      returns (EventServiceDeleteImageResponse);
+}
+
+service LanguageService {
+  // Adds a new language to the system.
+  rpc Add(LanguageServiceAddRequest) returns (LanguageServiceAddResponse);
 }
 
 // Manages event tags.
@@ -27,8 +43,10 @@ service TagService {
   rpc Create(TagServiceCreateRequest) returns (TagServiceCreateResponse);
   // Retrieves a tag by ID.
   rpc Find(TagServiceFindRequest) returns (TagServiceFindResponse);
+  // Deletes a tag by ID.
+  rpc Delete(TagServiceDeleteRequest) returns (TagServiceDeleteResponse);
   // Get relevant tag IDs for an event description.
-  rpc GetTagsByDescription(TagServiceGetTagsByDescriptionRequest) returns (TagServiceGetTagsByDescriptionResponse);
+  rpc Suggest(TagServiceSuggestRequest) returns (TagServiceSuggestResponse);
 }
 
 // Manages user accounts.
@@ -41,12 +59,65 @@ service UserService {
   rpc Find(UserServiceFindRequest) returns (UserServiceFindResponse);
 }
 
-message TagServiceGetTagsByDescriptionRequest {
+message EventServiceUpdateResponse {}
+
+message EventServiceDeleteResponse {}
+
+message EventServiceDeleteImageResponse {}
+
+message EventServiceReorderImagesResponse {}
+
+message TagServiceDeleteResponse {}
+
+message NewLanguageForm {
+  string name = 1;
+}
+
+message LanguageServiceAddRequest {
+  NewLanguageForm form = 1;
+}
+
+message TagServiceDeleteRequest {
+  // UUID of the event to be deleted.
+  string tag_id = 1;
+}
+
+message LanguageServiceAddResponse {
+  string language_id = 1;
+}
+
+message NewTagIds {
+  repeated string replace_with = 1;
+}
+
+message EventServiceUpdateRequest {
+  optional string title = 1;
+  optional string description = 2;
+  optional NewTagIds tag_ids = 3;
+  optional bool track_attendance = 4;
+}
+
+message EventServiceDeleteRequest {
+  // UUID of the event to be deleted.
+  string event_id = 1;
+}
+
+message EventServiceReorderImagesRequest {
+  // Reorders images of an event according to a new list.
+  string event_id = 1;
+  repeated string image_ids = 2;
+}
+
+message EventServiceDeleteImageRequest {
+  string image_id = 1;
+}
+
+message TagServiceSuggestRequest {
   // Description to predict tags for.
   string description = 1;
 }
 
-message TagServiceGetTagsByDescriptionResponse {
+message TagServiceSuggestResponse {
   // A list of predicted tag IDs for a description.
   repeated string tag_ids = 1;
 }
