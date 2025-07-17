@@ -24,7 +24,11 @@ pub const EVENT_MAX_TAGS: usize = 10;
 )]
 pub struct EventTags(Vec<crate::Tag>);
 
-#[nutype(validate(predicate = |tag_ids| tag_ids.len() <= crate::EVENT_MAX_TAGS), derive(Debug))]
+#[nutype(
+    new_unchecked,
+    validate(predicate = |tag_ids| tag_ids.len() <= crate::EVENT_MAX_TAGS),
+    derive(Debug, AsRef),
+)]
 pub struct EventTagIds(Vec<crate::TagId>);
 
 #[derive(Debug)]
