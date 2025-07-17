@@ -7,6 +7,9 @@ pub use self::services::event::{
     EventId, EventImageId, EventImageIds, EventImageIdsError, EventTagIds, EventTagIdsError,
     EventTags, EventTagsError, EventTitle, EventTitleError, NewEventForm, UpdateEventForm,
 };
+pub use self::services::language::{
+    LANGUAGE_NAME_MAX_LEN, LanguageId, LanguageName, LanguageNameError, NewLanguageForm,
+};
 pub use self::services::tag::{
     NewTagForm, TAG_ALIAS_MAX_LEN, TAG_ALIAS_MIN_LEN, TAG_MAX_ALIASES, TAG_NAME_MAX_LEN,
     TAG_NAME_MIN_LEN, TAG_NAME_REGEX, Tag, TagAlias, TagAliasError, TagAliases, TagAliasesError,
