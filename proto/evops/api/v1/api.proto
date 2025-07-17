@@ -90,11 +90,16 @@ message NewTagIds {
   repeated string replace_with = 1;
 }
 
-message EventServiceUpdateRequest {
+message UpdateEventForm {
   optional string title = 1;
   optional string description = 2;
   optional NewTagIds tag_ids = 3;
   optional bool track_attendance = 4;
+}
+
+message EventServiceUpdateRequest {
+  string event_id = 1;
+  UpdateEventForm form = 2;
 }
 
 message EventServiceDeleteRequest {
