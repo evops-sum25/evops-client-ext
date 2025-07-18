@@ -10,6 +10,7 @@ pub type ApiResult<T> = std::result::Result<T, crate::ApiError>;
     aide(output_with = "String")
 )]
 pub enum ApiError {
+    Auth(String),
     InvalidArgument(String),
     NotFound(String),
     AlreadyExists(String),
@@ -33,6 +34,7 @@ impl axum::response::IntoResponse for ApiError {
         use axum::http::StatusCode;
 
         match self {
+            ApiError::Auth(e) => (StatusCode::UNAUTHORIZED, e),
             ApiError::InvalidArgument(e) => (StatusCode::UNPROCESSABLE_ENTITY, e),
             ApiError::NotFound(e) => (StatusCode::NOT_FOUND, e),
             ApiError::AlreadyExists(e) => (StatusCode::CONFLICT, e),
@@ -55,6 +57,7 @@ impl axum::response::IntoResponse for ApiError {
 impl From<ApiError> for tonic::Status {
     fn from(value: ApiError) -> Self {
         match value {
+            ApiError::Auth(e) => Self::unauthenticated(e),
             ApiError::InvalidArgument(e) => Self::invalid_argument(e),
             ApiError::NotFound(e) => Self::not_found(e),
             ApiError::AlreadyExists(e) => Self::already_exists(e),

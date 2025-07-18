@@ -61,6 +61,17 @@ pub struct JwtClaims {
     pub exp: chrono::DateTime<chrono::Utc>,
 }
 
+#[derive(Debug)]
+pub enum JwtTokenType {
+    Bearer,
+}
+
+#[derive(Debug)]
+pub struct JwtTokenInfo {
+    pub token: String,
+    pub token_type: JwtTokenType,
+}
+
 #[allow(clippy::repeat_once)]
 #[cfg(test)]
 mod tests {
