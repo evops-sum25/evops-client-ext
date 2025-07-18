@@ -58,18 +58,16 @@ pub struct UserPassword(String);
 #[derive(Serialize)]
 pub struct JwtClaims {
     pub sub: UserId,
+    pub iat: chrono::DateTime<chrono::Utc>,
     pub exp: chrono::DateTime<chrono::Utc>,
-}
-
-#[derive(Debug)]
-pub enum JwtTokenType {
-    Bearer,
-}
-
-#[derive(Debug)]
-pub struct JwtTokenInfo {
-    pub token: String,
     pub token_type: JwtTokenType,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "lowercase")]
+pub enum JwtTokenType {
+    Access,
+    Refresh,
 }
 
 #[allow(clippy::repeat_once)]
