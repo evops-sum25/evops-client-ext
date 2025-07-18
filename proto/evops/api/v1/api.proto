@@ -51,12 +51,43 @@ service TagService {
 
 // Manages user accounts.
 service UserService {
-  // Lists all users.
-  rpc List(UserServiceListRequest) returns (UserServiceListResponse);
-  // Creates a new user.
-  rpc Create(UserServiceCreateRequest) returns (UserServiceCreateResponse);
-  // Retrieves a user by ID.
-  rpc Find(UserServiceFindRequest) returns (UserServiceFindResponse);
+  rpc LogIn(UserServiceLogInRequest) returns (UserServiceLogInResponse);
+  rpc Refresh(UserServiceRefreshRequest) returns (UserServiceRefreshResponse);
+  rpc SignUp(UserServiceSignUpRequest) returns (UserServiceSignUpResponse);
+}
+
+message UserCredentials {
+  string login = 1;
+  string password = 2;
+}
+
+message AuthTokens {
+  string access = 1;
+  string refresh = 2;
+}
+
+message UserServiceLogInRequest {
+  UserCredentials credentials = 1;
+}
+
+message UserServiceLogInResponse {
+  AuthTokens tokens = 1;
+}
+
+message UserServiceRefreshRequest {
+  string refresh_token = 1;
+}
+
+message UserServiceRefreshResponse {
+  AuthTokens tokens = 1;
+}
+
+message UserServiceSignUpRequest {
+  NewUserForm form = 1;
+}
+
+message UserServiceSignUpResponse {
+  AuthTokens tokens = 1;
 }
 
 message EventServiceUpdateResponse {}
@@ -172,16 +203,6 @@ message TagServiceFindResponse {
   Tag tag = 1;
 }
 
-message UserServiceFindRequest {
-  // UUID of the user to retrieve.
-  string id = 1;
-}
-
-message UserServiceFindResponse {
-  // Retrieved user object.
-  User user = 1;
-}
-
 message EventServiceListRequest {
   // Id of last event (optional).
   optional string last_id = 1;
@@ -204,13 +225,6 @@ message TagServiceListRequest {
 message TagServiceListResponse {
   // List of all tags.
   repeated Tag tags = 1;
-}
-
-message UserServiceListRequest {}
-
-message UserServiceListResponse {
-  // List of all users.
-  repeated User users = 1;
 }
 
 message EventServiceCreateRequest {
@@ -275,16 +289,6 @@ message Tag {
   string name = 2;
   // Alternative names (e.g., `["Concert", "Gig"]` for `"Music"`).
   repeated string aliases = 3;
-}
-
-message UserServiceCreateRequest {
-  // Data for creating a new user.
-  NewUserForm form = 1;
-}
-
-message UserServiceCreateResponse {
-  // ID of the created user.
-  string user_id = 1;
 }
 
 message NewUserForm {
