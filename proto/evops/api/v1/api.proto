@@ -188,6 +188,8 @@ message EventServiceListRequest {
   optional string last_id = 1;
   // Batch size (optional).
   optional int64 limit = 2;
+  // Tag ids of events to be listed (optional).
+  repeated string tags = 3;
 }
 
 message EventServiceListResponse {
