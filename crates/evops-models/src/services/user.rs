@@ -2,6 +2,8 @@ use std::sync::LazyLock;
 
 use nutype::nutype;
 use regex::Regex;
+#[cfg(feature = "chrono")]
+use serde::Deserialize;
 use serde::Serialize;
 use uuid::Uuid;
 
@@ -18,7 +20,17 @@ pub struct User {
     pub display_name: UserDisplayName,
 }
 
-#[nutype(derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Display, Serialize))]
+#[nutype(derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Hash,
+    Display,
+    Serialize,
+    Deserialize,
+))]
 pub struct UserId(Uuid);
 
 pub const USER_DISPLAY_NAME_MIN_LEN: usize = 1;
@@ -56,20 +68,15 @@ pub static USER_PASSWORD_REGEX: LazyLock<Regex> =
 ))]
 pub struct UserPassword(String);
 
+#[nutype(derive(Debug, AsRef))]
+pub struct JsonWebToken(String);
+
 #[cfg(feature = "chrono")]
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 pub struct JwtClaims {
     pub sub: UserId,
     pub iat: chrono::DateTime<chrono::Utc>,
     pub exp: chrono::DateTime<chrono::Utc>,
-    pub token_type: JwtTokenType,
-}
-
-#[derive(Debug, Serialize)]
-#[serde(rename_all = "lowercase")]
-pub enum JwtTokenType {
-    Access,
-    Refresh,
 }
 
 #[allow(clippy::repeat_once)]
