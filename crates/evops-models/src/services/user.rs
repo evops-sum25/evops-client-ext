@@ -32,7 +32,8 @@ pub struct UserDisplayName(String);
 
 pub const USER_LOGIN_MIN_LEN: usize = 4;
 pub const USER_LOGIN_MAX_LEN: usize = 32;
-pub static USER_LOGIN_REGEX: LazyLock<Regex> = LazyLock::new(|| Regex::new("^.*$").unwrap());
+pub static USER_LOGIN_REGEX: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new("^[a-zA-Z][a-zA-Z0-9_]+$").unwrap());
 #[nutype(
     new_unchecked,
     validate(
@@ -46,7 +47,8 @@ pub struct UserLogin(String);
 
 pub const USER_PASSWORD_MIN_LEN: usize = 8;
 pub const USER_PASSWORD_MAX_LEN: usize = 64;
-pub static USER_PASSWORD_REGEX: LazyLock<Regex> = LazyLock::new(|| Regex::new("^.*$").unwrap());
+pub static USER_PASSWORD_REGEX: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r#"^[a-zA-Z0-9~`!@#$%^&*()\-_+={}\[\]|\\;:"<>,./?]+$"#).unwrap());
 #[nutype(validate(
     len_char_min = USER_PASSWORD_MIN_LEN,
     len_char_max = USER_PASSWORD_MAX_LEN,
