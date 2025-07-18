@@ -48,6 +48,7 @@ pub struct UpdateEventForm {
     pub track_attendance: Option<bool>,
 }
 
+#[cfg(feature = "chrono")]
 #[derive(Debug)]
 pub struct Event {
     pub id: crate::EventId,
@@ -57,9 +58,7 @@ pub struct Event {
     pub image_ids: EventImageIds,
     pub tags: crate::EventTags,
     pub with_attendance: bool,
-    #[cfg(feature = "chrono")]
     pub created_at: chrono::DateTime<chrono::Utc>,
-    #[cfg(feature = "chrono")]
     pub modified_at: chrono::DateTime<chrono::Utc>,
 }
 

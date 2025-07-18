@@ -2,12 +2,13 @@ use std::sync::LazyLock;
 
 use nutype::nutype;
 use regex::Regex;
+use serde::Serialize;
 use uuid::Uuid;
 
-#[derive(Debug)]
 pub struct NewUserForm {
     pub login: UserLogin,
     pub display_name: UserDisplayName,
+    pub password: UserPassword,
 }
 
 #[derive(Debug)]
@@ -17,7 +18,7 @@ pub struct User {
     pub display_name: UserDisplayName,
 }
 
-#[nutype(derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Display))]
+#[nutype(derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Display, Serialize))]
 pub struct UserId(Uuid);
 
 pub const USER_DISPLAY_NAME_MIN_LEN: usize = 1;
@@ -52,6 +53,13 @@ pub static USER_PASSWORD_REGEX: LazyLock<Regex> = LazyLock::new(|| Regex::new("^
     regex = USER_PASSWORD_REGEX,
 ))]
 pub struct UserPassword(String);
+
+#[cfg(feature = "chrono")]
+#[derive(Serialize)]
+pub struct JwtClaims {
+    pub sub: UserId,
+    pub exp: chrono::DateTime<chrono::Utc>,
+}
 
 #[allow(clippy::repeat_once)]
 #[cfg(test)]

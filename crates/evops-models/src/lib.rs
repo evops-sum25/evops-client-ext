@@ -16,10 +16,10 @@ pub use self::services::tag::{
     TagId, TagName, TagNameError,
 };
 pub use self::services::user::{
-    NewUserForm, USER_DISPLAY_NAME_MAX_LEN, USER_DISPLAY_NAME_MIN_LEN, USER_LOGIN_MAX_LEN,
-    USER_LOGIN_MIN_LEN, USER_LOGIN_REGEX, USER_PASSWORD_MAX_LEN, USER_PASSWORD_MIN_LEN,
-    USER_PASSWORD_REGEX, User, UserDisplayName, UserDisplayNameError, UserId, UserLogin,
-    UserLoginError, UserPassword, UserPasswordError,
+    JwtClaims, NewUserForm, USER_DISPLAY_NAME_MAX_LEN, USER_DISPLAY_NAME_MIN_LEN,
+    USER_LOGIN_MAX_LEN, USER_LOGIN_MIN_LEN, USER_LOGIN_REGEX, USER_PASSWORD_MAX_LEN,
+    USER_PASSWORD_MIN_LEN, USER_PASSWORD_REGEX, User, UserDisplayName, UserDisplayNameError,
+    UserId, UserLogin, UserLoginError, UserPassword, UserPasswordError,
 };
 
 pub use self::common::{PgLimit, PgLimitError};

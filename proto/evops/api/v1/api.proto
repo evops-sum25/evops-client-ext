@@ -299,6 +299,7 @@ message NewUserForm {
   string login = 1;
   // **Required**. Display name.
   string display_name = 2;
+  string password = 3;
 }
 
 message User {
