@@ -295,13 +295,17 @@ message UserServiceCreateResponse {
 }
 
 message NewUserForm {
+  // **Required**. Case-insensitively unique login.
+  string login = 1;
   // **Required**. Display name.
-  string name = 1;
+  string display_name = 2;
 }
 
 message User {
   // User UUID.
   string id = 1;
+  // Case-insensitively unique login.
+  string login = 2;
   // Display name.
-  string name = 2;
+  string display_name = 3;
 }
