@@ -35,9 +35,7 @@ pub struct EventTagIds(Vec<crate::TagId>);
 pub struct NewEventForm {
     pub title: crate::EventTitle,
     pub description: crate::EventDescription,
-    pub author_id: crate::UserId,
     pub tag_ids: crate::EventTagIds,
-    pub with_attendance: bool,
 }
 
 #[derive(Debug)]
@@ -45,9 +43,9 @@ pub struct UpdateEventForm {
     pub title: Option<crate::EventTitle>,
     pub description: Option<crate::EventDescription>,
     pub tag_ids: Option<crate::EventTagIds>,
-    pub track_attendance: Option<bool>,
 }
 
+#[cfg(feature = "chrono")]
 #[derive(Debug)]
 pub struct Event {
     pub id: crate::EventId,
@@ -56,10 +54,7 @@ pub struct Event {
     pub author: crate::User,
     pub image_ids: EventImageIds,
     pub tags: crate::EventTags,
-    pub with_attendance: bool,
-    #[cfg(feature = "chrono")]
     pub created_at: chrono::DateTime<chrono::Utc>,
-    #[cfg(feature = "chrono")]
     pub modified_at: chrono::DateTime<chrono::Utc>,
 }
 

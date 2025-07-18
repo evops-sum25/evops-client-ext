@@ -51,12 +51,43 @@ service TagService {
 
 // Manages user accounts.
 service UserService {
-  // Lists all users.
-  rpc List(UserServiceListRequest) returns (UserServiceListResponse);
-  // Creates a new user.
-  rpc Create(UserServiceCreateRequest) returns (UserServiceCreateResponse);
-  // Retrieves a user by ID.
-  rpc Find(UserServiceFindRequest) returns (UserServiceFindResponse);
+  rpc LogIn(UserServiceLogInRequest) returns (UserServiceLogInResponse);
+  rpc Refresh(UserServiceRefreshRequest) returns (UserServiceRefreshResponse);
+  rpc SignUp(UserServiceSignUpRequest) returns (UserServiceSignUpResponse);
+}
+
+message UserCredentials {
+  string login = 1;
+  string password = 2;
+}
+
+message AuthTokens {
+  string access = 1;
+  string refresh = 2;
+}
+
+message UserServiceLogInRequest {
+  UserCredentials credentials = 1;
+}
+
+message UserServiceLogInResponse {
+  AuthTokens tokens = 1;
+}
+
+message UserServiceRefreshRequest {
+  string refresh_token = 1;
+}
+
+message UserServiceRefreshResponse {
+  AuthTokens tokens = 1;
+}
+
+message UserServiceSignUpRequest {
+  NewUserForm form = 1;
+}
+
+message UserServiceSignUpResponse {
+  AuthTokens tokens = 1;
 }
 
 message EventServiceUpdateResponse {}
@@ -94,7 +125,6 @@ message UpdateEventForm {
   optional string title = 1;
   optional string description = 2;
   optional NewTagIds tag_ids = 3;
-  optional bool track_attendance = 4;
 }
 
 message EventServiceUpdateRequest {
@@ -173,16 +203,6 @@ message TagServiceFindResponse {
   Tag tag = 1;
 }
 
-message UserServiceFindRequest {
-  // UUID of the user to retrieve.
-  string id = 1;
-}
-
-message UserServiceFindResponse {
-  // Retrieved user object.
-  User user = 1;
-}
-
 message EventServiceListRequest {
   // Id of last event (optional).
   optional string last_id = 1;
@@ -211,13 +231,6 @@ message TagServiceListResponse {
   repeated Tag tags = 1;
 }
 
-message UserServiceListRequest {}
-
-message UserServiceListResponse {
-  // List of all users.
-  repeated User users = 1;
-}
-
 message EventServiceCreateRequest {
   // Data for creating a new event.
   NewEventForm form = 1;
@@ -231,14 +244,10 @@ message EventServiceCreateResponse {
 message NewEventForm {
   // **Required**. Event title.
   string title = 1;
-  // **Required**. UUID of the creating user.
-  string author_id = 2;
   // **Required**. Detailed description.
-  string description = 3;
+  string description = 2;
   // UUIDs of associated tags.
-  repeated string tag_ids = 4;
-  // Whether to enable attendance tracking.
-  bool with_attendance = 5;
+  repeated string tag_ids = 3;
 }
 
 message Event {
@@ -254,8 +263,6 @@ message Event {
   repeated string image_ids = 5;
   // Associated tags.
   repeated Tag tags = 6;
-  // Whether attendance tracking is enabled.
-  bool with_attendance = 7;
   // Creation timestamp.
   google.protobuf.Timestamp created_at = 8;
   // Last modification timestamp.
@@ -288,24 +295,19 @@ message Tag {
   repeated string aliases = 3;
 }
 
-message UserServiceCreateRequest {
-  // Data for creating a new user.
-  NewUserForm form = 1;
-}
-
-message UserServiceCreateResponse {
-  // ID of the created user.
-  string user_id = 1;
-}
-
 message NewUserForm {
+  // **Required**. Case-insensitively unique login.
+  string login = 1;
   // **Required**. Display name.
-  string name = 1;
+  string display_name = 2;
+  string password = 3;
 }
 
 message User {
   // User UUID.
   string id = 1;
+  // Case-insensitively unique login.
+  string login = 2;
   // Display name.
-  string name = 2;
+  string display_name = 3;
 }
