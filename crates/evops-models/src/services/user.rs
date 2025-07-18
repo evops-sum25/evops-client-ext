@@ -13,7 +13,7 @@ pub struct NewUserForm {
 
 #[derive(Debug)]
 pub struct User {
-    pub id: crate::UserId,
+    pub id: UserId,
     pub login: UserLogin,
     pub display_name: UserDisplayName,
 }
