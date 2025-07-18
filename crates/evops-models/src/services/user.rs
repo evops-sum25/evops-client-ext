@@ -75,7 +75,6 @@ pub struct JsonWebToken(String);
 #[derive(Serialize, Deserialize)]
 pub struct JwtClaims {
     pub sub: UserId,
-    pub iat: chrono::DateTime<chrono::Utc>,
     pub exp: chrono::DateTime<chrono::Utc>,
 }
 
