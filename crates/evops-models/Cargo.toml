@@ -11,8 +11,9 @@ diesel = { workspace = true }
 image = { workspace = true, features = [
   # "avif-native",
 ], optional = true }
-nutype = { workspace = true, features = ["new_unchecked", "regex"] }
+nutype = { workspace = true, features = ["new_unchecked", "regex", "serde"] }
 regex = { workspace = true }
+serde = { workspace = true }
 thiserror = { workspace = true }
 tonic = { workspace = true, optional = true }
 uuid = { workspace = true }
