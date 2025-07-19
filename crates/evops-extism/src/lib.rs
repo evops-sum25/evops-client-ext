@@ -14,7 +14,9 @@ pub fn parse_markdown(text: String) -> FnResult<Prost<MarkdownRoot>> {
 
 #[extism_pdk::plugin_fn]
 pub fn validate_user_name(user_name: String) -> FnResult<Prost<ValidateUserNameResult>> {
-    Ok(Prost(evops_models::UserName::try_new(user_name).into()))
+    Ok(Prost(
+        evops_models::UserDisplayName::try_new(user_name).into(),
+    ))
 }
 
 #[extism_pdk::plugin_fn]
@@ -43,7 +45,7 @@ pub fn validate_tag_alias(tag_alias: String) -> FnResult<Prost<ValidateTagAliasR
 
 #[extism_pdk::plugin_fn]
 pub fn get_user_name_max_len() -> FnResult<Json<usize>> {
-    Ok(Json(evops_models::USER_NAME_MAX_LEN))
+    Ok(Json(evops_models::USER_DISPLAY_NAME_MAX_LEN))
 }
 
 #[extism_pdk::plugin_fn]

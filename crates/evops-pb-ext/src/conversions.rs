@@ -1,14 +1,14 @@
-impl<T> From<Result<T, evops_models::UserNameError>> for crate::ValidateUserNameResult {
-    fn from(value: Result<T, evops_models::UserNameError>) -> Self {
+impl<T> From<Result<T, evops_models::UserDisplayNameError>> for crate::ValidateUserNameResult {
+    fn from(value: Result<T, evops_models::UserDisplayNameError>) -> Self {
         use crate::validate_user_name_result::Result as B;
-        use evops_models::UserNameError as N;
+        use evops_models::UserDisplayNameError as N;
 
         Self {
             result: Some(match value {
                 Ok(_) => B::Ok(()),
                 Err(e) => match e {
+                    N::LenCharMinViolated => B::NotEmptyViolated(()),
                     N::LenCharMaxViolated => B::LenCharMaxViolated(()),
-                    N::NotEmptyViolated => B::NotEmptyViolated(()),
                 },
             }),
         }
