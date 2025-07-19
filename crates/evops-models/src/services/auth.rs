@@ -7,6 +7,9 @@ use serde::Deserialize;
 use serde::Serialize;
 use uuid::Uuid;
 
+#[cfg(feature = "chrono")]
+mod jwt_numeric_date;
+
 pub struct NewUserForm {
     pub login: UserLogin,
     pub display_name: UserDisplayName,
@@ -84,6 +87,7 @@ pub struct JsonWebTokenHash([u8; 32]);
 #[derive(Serialize, Deserialize)]
 pub struct JwtClaims {
     pub sub: UserId,
+    #[serde(with = "jwt_numeric_date")]
     pub exp: chrono::DateTime<chrono::Utc>,
 }
 
