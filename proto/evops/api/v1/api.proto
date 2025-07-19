@@ -3,6 +3,14 @@ package evops.api.v1;
 
 import "google/protobuf/timestamp.proto";
 
+// Manages login sessions.
+service AuthService {
+  rpc LogIn(AuthServiceLogInRequest) returns (AuthServiceLogInResponse);
+  rpc RefreshSession(AuthServiceRefreshSessionRequest)
+      returns (AuthServiceRefreshSessionResponse);
+  rpc SignUp(AuthServiceSignUpRequest) returns (AuthServiceSignUpResponse);
+}
+
 // Manages event-related operations.
 service EventService {
   // Lists all events.
@@ -49,13 +57,6 @@ service TagService {
   rpc Suggest(TagServiceSuggestRequest) returns (TagServiceSuggestResponse);
 }
 
-// Manages user accounts.
-service UserService {
-  rpc LogIn(UserServiceLogInRequest) returns (UserServiceLogInResponse);
-  rpc Refresh(UserServiceRefreshRequest) returns (UserServiceRefreshResponse);
-  rpc SignUp(UserServiceSignUpRequest) returns (UserServiceSignUpResponse);
-}
-
 message UserCredentials {
   string login = 1;
   string password = 2;
@@ -66,27 +67,27 @@ message AuthTokens {
   string refresh = 2;
 }
 
-message UserServiceLogInRequest {
+message AuthServiceLogInRequest {
   UserCredentials credentials = 1;
 }
 
-message UserServiceLogInResponse {
+message AuthServiceLogInResponse {
   AuthTokens tokens = 1;
 }
 
-message UserServiceRefreshRequest {
+message AuthServiceRefreshSessionRequest {
   string refresh_token = 1;
 }
 
-message UserServiceRefreshResponse {
+message AuthServiceRefreshSessionResponse {
   AuthTokens tokens = 1;
 }
 
-message UserServiceSignUpRequest {
+message AuthServiceSignUpRequest {
   NewUserForm form = 1;
 }
 
-message UserServiceSignUpResponse {
+message AuthServiceSignUpResponse {
   AuthTokens tokens = 1;
 }
 
@@ -210,7 +211,8 @@ message EventServiceListRequest {
   optional int64 limit = 2;
   // Tag ids of events to be listed (optional).
   repeated string tag_ids = 3;
-  // Search string to match against event titles and descriptions (case-insensitive).
+  // Search string to match against event titles and descriptions
+  // (case-insensitive).
   optional string search = 4;
 }
 

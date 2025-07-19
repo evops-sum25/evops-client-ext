@@ -1,4 +1,11 @@
 pub use self::error::{ApiError, ApiResult};
+pub use self::services::auth::{
+    AuthTokens, JsonWebToken, JsonWebTokenHash, JwtClaims, NewUserForm, USER_DISPLAY_NAME_MAX_LEN,
+    USER_DISPLAY_NAME_MIN_LEN, USER_LOGIN_MAX_LEN, USER_LOGIN_MIN_LEN, USER_LOGIN_REGEX,
+    USER_PASSWORD_MAX_LEN, USER_PASSWORD_MIN_LEN, USER_PASSWORD_REGEX, User, UserDisplayName,
+    UserDisplayNameError, UserId, UserLogin, UserLoginError, UserPassword, UserPasswordError,
+    UserPasswordHash,
+};
 #[cfg(feature = "image")]
 pub use self::services::event::image::{EventImage, EventImageError};
 pub use self::services::event::{
@@ -14,13 +21,6 @@ pub use self::services::tag::{
     NewTagForm, TAG_ALIAS_MAX_LEN, TAG_ALIAS_MIN_LEN, TAG_MAX_ALIASES, TAG_NAME_MAX_LEN,
     TAG_NAME_MIN_LEN, TAG_NAME_REGEX, Tag, TagAlias, TagAliasError, TagAliases, TagAliasesError,
     TagId, TagName, TagNameError,
-};
-pub use self::services::user::{
-    AuthTokens, JsonWebToken, JsonWebTokenHash, JwtClaims, NewUserForm, USER_DISPLAY_NAME_MAX_LEN,
-    USER_DISPLAY_NAME_MIN_LEN, USER_LOGIN_MAX_LEN, USER_LOGIN_MIN_LEN, USER_LOGIN_REGEX,
-    USER_PASSWORD_MAX_LEN, USER_PASSWORD_MIN_LEN, USER_PASSWORD_REGEX, User, UserDisplayName,
-    UserDisplayNameError, UserId, UserLogin, UserLoginError, UserPassword, UserPasswordError,
-    UserPasswordHash,
 };
 
 pub use self::common::{PgLimit, PgLimitError};
