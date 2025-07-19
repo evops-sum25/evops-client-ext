@@ -84,6 +84,12 @@ pub struct JwtClaims {
     pub exp: chrono::DateTime<chrono::Utc>,
 }
 
+#[derive(Debug)]
+pub struct AuthTokens {
+    pub access: JsonWebToken,
+    pub refresh: JsonWebToken,
+}
+
 #[allow(clippy::repeat_once)]
 #[cfg(test)]
 mod tests {
