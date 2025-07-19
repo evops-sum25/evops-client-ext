@@ -6,7 +6,7 @@ edition = "2024"
 aide = { workspace = true, features = ["macros"], optional = true }
 axum = { workspace = true, optional = true }
 bytes = { workspace = true, optional = true }
-chrono = { workspace = true, features = ["serde"], optional = true }
+chrono = { workspace = true, optional = true }
 diesel = { workspace = true }
 image = { workspace = true, features = [
   # "avif-native",
