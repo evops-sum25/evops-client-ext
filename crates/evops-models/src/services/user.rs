@@ -1,6 +1,5 @@
 use std::sync::LazyLock;
 
-use bytes::Bytes;
 use nutype::nutype;
 use regex::Regex;
 #[cfg(feature = "chrono")]
