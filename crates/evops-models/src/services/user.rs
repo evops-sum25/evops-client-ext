@@ -71,7 +71,7 @@ pub static USER_PASSWORD_REGEX: LazyLock<Regex> =
 )]
 pub struct UserPassword(String);
 
-#[nutype(derive(Debug))]
+#[nutype(derive(Debug, AsRef))]
 pub struct UserPasswordHash(String);
 
 #[nutype(derive(Debug, AsRef))]
