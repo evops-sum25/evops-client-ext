@@ -189,7 +189,7 @@ message EventServiceListRequest {
   // Batch size (optional).
   optional int64 limit = 2;
   // Tag ids of events to be listed (optional).
-  repeated string tags = 3;
+  repeated string tag_ids = 3;
   // Search string to match against event titles and descriptions (case-insensitive).
   optional string search = 4;
 }
