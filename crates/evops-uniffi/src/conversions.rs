@@ -1,12 +1,12 @@
-impl<T> From<Result<T, evops_models::UserNameError>> for crate::ValidateUserNameResult {
-    fn from(value: Result<T, evops_models::UserNameError>) -> Self {
+impl<T> From<Result<T, evops_models::UserDisplayNameError>> for crate::ValidateUserNameResult {
+    fn from(value: Result<T, evops_models::UserDisplayNameError>) -> Self {
         match value {
             Ok(_) => Self::Ok,
             Err(e) => {
-                use evops_models::UserNameError as E;
+                use evops_models::UserDisplayNameError as E;
                 match e {
+                    E::LenCharMinViolated => Self::NotEmptyViolated,
                     E::LenCharMaxViolated => Self::LenCharMaxViolated,
-                    E::NotEmptyViolated => Self::NotEmptyViolated,
                 }
             }
         }

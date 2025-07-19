@@ -15,7 +15,7 @@ enum ValidateUserNameResult {
 }
 #[uniffi::export]
 fn validate_user_name(user_name: &str) -> self::ValidateUserNameResult {
-    evops_models::UserName::try_new(user_name).into()
+    evops_models::UserDisplayName::try_new(user_name).into()
 }
 
 #[derive(uniffi::Enum)]
@@ -65,7 +65,7 @@ fn validate_tag_alias(tag_alias: &str) -> ValidateTagAliasResult {
 
 #[uniffi::export]
 fn get_user_name_max_len() -> u8 {
-    evops_models::USER_NAME_MAX_LEN.try_into().unwrap()
+    evops_models::USER_DISPLAY_NAME_MAX_LEN.try_into().unwrap()
 }
 
 #[uniffi::export]

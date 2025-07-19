@@ -6,7 +6,7 @@ edition = "2024"
 aide = { workspace = true, features = ["macros"], optional = true }
 axum = { workspace = true, optional = true }
 bytes = { workspace = true, optional = true }
-chrono = { workspace = true, optional = true }
+chrono = { workspace = true, features = ["serde"], optional = true }
 diesel = { workspace = true }
 image = { workspace = true, features = [
   # "avif-native",
@@ -16,7 +16,7 @@ regex = { workspace = true }
 serde = { workspace = true }
 thiserror = { workspace = true }
 tonic = { workspace = true, optional = true }
-uuid = { workspace = true }
+uuid = { workspace = true, features = ["serde"] }
 webp = { workspace = true, optional = true }
 
 [features]

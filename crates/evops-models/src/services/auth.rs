@@ -97,16 +97,16 @@ pub struct AuthTokens {
 #[cfg(test)]
 mod tests {
     #[test]
-    fn user_name() {
+    fn user_display_name() {
         assert_eq!(
             crate::UserDisplayName::try_new(""),
-            Err(crate::UserNameError::NotEmptyViolated),
+            Err(crate::UserDisplayNameError::LenCharMinViolated),
         );
         assert!(crate::UserDisplayName::try_new("a".repeat(1)).is_ok());
         assert!(crate::UserDisplayName::try_new("a".repeat(64)).is_ok());
         assert_eq!(
             crate::UserDisplayName::try_new("a".repeat(65)),
-            Err(crate::UserNameError::LenCharMaxViolated),
+            Err(crate::UserDisplayNameError::LenCharMaxViolated),
         );
     }
 }
