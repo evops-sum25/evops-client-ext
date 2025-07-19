@@ -1,5 +1,6 @@
 use std::sync::LazyLock;
 
+use bytes::Bytes;
 use nutype::nutype;
 use regex::Regex;
 #[cfg(feature = "chrono")]
@@ -76,6 +77,9 @@ pub struct UserPasswordHash(String);
 
 #[nutype(derive(Debug, AsRef))]
 pub struct JsonWebToken(String);
+
+#[nutype(derive(Debug, AsRef))]
+pub struct JsonWebTokenHash([u8; 32]);
 
 #[cfg(feature = "chrono")]
 #[derive(Serialize, Deserialize)]
