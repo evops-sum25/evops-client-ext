@@ -5,7 +5,7 @@ impl<T> From<Result<T, evops_models::UserDisplayNameError>> for crate::ValidateU
             Err(e) => {
                 use evops_models::UserDisplayNameError as E;
                 match e {
-                    E::LenCharMinViolated => Self::NotEmptyViolated,
+                    E::LenCharMinViolated => Self::LenCharMinViolated,
                     E::LenCharMaxViolated => Self::LenCharMaxViolated,
                 }
             }
@@ -20,8 +20,8 @@ impl<T> From<Result<T, evops_models::EventTitleError>> for crate::ValidateEventT
             Err(e) => {
                 use evops_models::EventTitleError as E;
                 match e {
+                    E::LenCharMinViolated => Self::LenCharMinViolated,
                     E::LenCharMaxViolated => Self::LenCharMaxViolated,
-                    E::NotEmptyViolated => Self::NotEmptyViolated,
                 }
             }
         }
@@ -37,8 +37,8 @@ impl<T> From<Result<T, evops_models::EventDescriptionError>>
             Err(e) => {
                 use evops_models::EventDescriptionError as E;
                 match e {
+                    E::LenCharMinViolated => Self::LenCharMinViolated,
                     E::LenCharMaxViolated => Self::LenCharMaxViolated,
-                    E::NotEmptyViolated => Self::NotEmptyViolated,
                 }
             }
         }
@@ -52,11 +52,41 @@ impl<T> From<Result<T, evops_models::TagNameError>> for crate::ValidateTagNameRe
             Err(e) => {
                 use evops_models::TagNameError as E;
                 match e {
+                    E::LenCharMinViolated => Self::LenCharMinViolated,
                     E::LenCharMaxViolated => Self::LenCharMaxViolated,
-                    E::NotEmptyViolated => Self::NotEmptyViolated,
                     E::RegexViolated => Self::RegexViolated,
                 }
             }
+        }
+    }
+}
+
+impl<T> From<Result<T, evops_models::UserLoginError>> for crate::ValidateUserLoginResult {
+    fn from(value: Result<T, evops_models::UserLoginError>) -> Self {
+        use evops_models::UserLoginError as N;
+
+        match value {
+            Ok(_) => Self::Ok,
+            Err(e) => match e {
+                N::LenCharMinViolated => Self::LenCharMinViolated,
+                N::LenCharMaxViolated => Self::LenCharMaxViolated,
+                N::RegexViolated => Self::RegexViolated,
+            },
+        }
+    }
+}
+
+impl<T> From<Result<T, evops_models::UserPasswordError>> for crate::ValidateUserPasswordResult {
+    fn from(value: Result<T, evops_models::UserPasswordError>) -> Self {
+        use evops_models::UserPasswordError as N;
+
+        match value {
+            Ok(_) => Self::Ok,
+            Err(e) => match e {
+                N::LenCharMinViolated => Self::LenCharMinViolated,
+                N::LenCharMaxViolated => Self::LenCharMaxViolated,
+                N::RegexViolated => Self::RegexViolated,
+            },
         }
     }
 }
@@ -68,8 +98,8 @@ impl<T> From<Result<T, evops_models::TagAliasError>> for crate::ValidateTagAlias
         match value {
             Ok(_) => Self::Ok,
             Err(e) => match e {
+                N::LenCharMinViolated => Self::LenCharMinViolated,
                 N::LenCharMaxViolated => Self::LenCharMaxViolated,
-                N::NotEmptyViolated => Self::NotEmptyViolated,
             },
         }
     }

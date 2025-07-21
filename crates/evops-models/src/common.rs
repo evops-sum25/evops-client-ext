@@ -9,22 +9,24 @@ pub struct PgLimit(i64);
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
     fn pg_limit() {
         assert_eq!(
-            crate::PgLimit::try_new(i64::MIN),
-            Err(crate::PgLimitError::GreaterOrEqualViolated),
+            PgLimit::try_new(i64::MIN),
+            Err(PgLimitError::GreaterOrEqualViolated),
         );
         assert_eq!(
-            crate::PgLimit::try_new(-3),
-            Err(crate::PgLimitError::GreaterOrEqualViolated),
+            PgLimit::try_new(-3),
+            Err(PgLimitError::GreaterOrEqualViolated),
         );
         assert_eq!(
-            crate::PgLimit::try_new(-1),
-            Err(crate::PgLimitError::GreaterOrEqualViolated),
+            PgLimit::try_new(-1),
+            Err(PgLimitError::GreaterOrEqualViolated),
         );
-        assert!(crate::PgLimit::try_new(0).is_ok());
-        assert!(crate::PgLimit::try_new(52).is_ok());
-        assert!(crate::PgLimit::try_new(i64::MAX).is_ok());
+        assert!(PgLimit::try_new(0).is_ok());
+        assert!(PgLimit::try_new(52).is_ok());
+        assert!(PgLimit::try_new(i64::MAX).is_ok());
     }
 }

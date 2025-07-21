@@ -131,35 +131,53 @@ message MarkdownThematicBreak {
   MarkdownPosition position = 1;
 }
 
-message ValidateUserNameResult {
+message ValidateUserDisplayNameResult {
   oneof result {
     google.protobuf.Empty ok = 1;
-    google.protobuf.Empty len_char_max_violated = 2;
-    google.protobuf.Empty not_empty_violated = 3;
+    google.protobuf.Empty len_char_min_violated = 2;
+    google.protobuf.Empty len_char_max_violated = 3;
   }
 }
 
 message ValidateEventTitleResult {
   oneof result {
     google.protobuf.Empty ok = 1;
-    google.protobuf.Empty len_char_max_violated = 2;
-    google.protobuf.Empty not_empty_violated = 3;
+    google.protobuf.Empty len_char_min_violated = 2;
+    google.protobuf.Empty len_char_max_violated = 3;
   }
 }
 
 message ValidateEventDescriptionResult {
   oneof result {
     google.protobuf.Empty ok = 1;
-    google.protobuf.Empty len_char_max_violated = 2;
-    google.protobuf.Empty not_empty_violated = 3;
+    google.protobuf.Empty len_char_min_violated = 2;
+    google.protobuf.Empty len_char_max_violated = 3;
   }
 }
 
 message ValidateTagNameResult {
   oneof result {
     google.protobuf.Empty ok = 1;
-    google.protobuf.Empty len_char_max_violated = 2;
-    google.protobuf.Empty not_empty_violated = 3;
+    google.protobuf.Empty len_char_min_violated = 2;
+    google.protobuf.Empty len_char_max_violated = 3;
+    google.protobuf.Empty regex_violated = 4;
+  }
+}
+
+message ValidateUserLoginResult {
+  oneof result {
+    google.protobuf.Empty ok = 1;
+    google.protobuf.Empty len_char_min_violated = 2;
+    google.protobuf.Empty len_char_max_violated = 3;
+    google.protobuf.Empty regex_violated = 4;
+  }
+}
+
+message ValidateUserPasswordResult {
+  oneof result {
+    google.protobuf.Empty ok = 1;
+    google.protobuf.Empty len_char_min_violated = 2;
+    google.protobuf.Empty len_char_max_violated = 3;
     google.protobuf.Empty regex_violated = 4;
   }
 }
@@ -167,7 +185,7 @@ message ValidateTagNameResult {
 message ValidateTagAliasResult {
   oneof result {
     google.protobuf.Empty ok = 1;
-    google.protobuf.Empty len_char_max_violated = 2;
-    google.protobuf.Empty not_empty_violated = 3;
+    google.protobuf.Empty len_char_min_violated = 2;
+    google.protobuf.Empty len_char_max_violated = 3;
   }
 }

@@ -4,12 +4,12 @@ use bytes::Bytes;
 use image::{DynamicImage, ImageReader};
 use nutype::nutype;
 
-use crate::ApiError;
+use crate::{ApiError, ApiResult};
 
 #[nutype(validate(predicate = |_image| true), derive(Debug, AsRef))]
 pub struct EventImage(DynamicImage);
 
-impl TryFrom<Bytes> for crate::EventImage {
+impl TryFrom<Bytes> for EventImage {
     type Error = ApiError;
 
     fn try_from(value: Bytes) -> Result<Self, Self::Error> {
@@ -24,8 +24,8 @@ impl TryFrom<Bytes> for crate::EventImage {
     }
 }
 
-impl crate::EventImage {
-    pub fn encode_as_webp(&self) -> crate::ApiResult<Bytes> {
+impl EventImage {
+    pub fn encode_as_webp(&self) -> ApiResult<Bytes> {
         let webp_image = {
             webp::Encoder::from_image(self.as_ref())
                 .map_err(|e| ApiError::InvalidArgument(e.to_string()))?

@@ -1,7 +1,4 @@
-use std::sync::LazyLock;
-
 use nutype::nutype;
-use regex::Regex;
 use uuid::Uuid;
 
 #[cfg(feature = "chrono")]
@@ -33,39 +30,32 @@ pub struct User {
 ))]
 pub struct UserId(Uuid);
 
-pub const USER_DISPLAY_NAME_MIN_LEN: usize = 1;
-pub const USER_DISPLAY_NAME_MAX_LEN: usize = 64;
 #[nutype(
     new_unchecked,
-    validate(len_char_min = USER_DISPLAY_NAME_MIN_LEN, len_char_max = USER_DISPLAY_NAME_MAX_LEN),
+    validate(
+        len_char_min = UserDisplayName::LEN_CHAR_MIN,
+        len_char_max = UserDisplayName::LEN_CHAR_MAX,
+    ),
     derive(Debug, PartialEq, Eq, AsRef, Hash),
 )]
 pub struct UserDisplayName(String);
 
-pub const USER_LOGIN_MIN_LEN: usize = 4;
-pub const USER_LOGIN_MAX_LEN: usize = 32;
-pub static USER_LOGIN_REGEX: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new("^[a-zA-Z][a-zA-Z0-9_]+$").unwrap());
 #[nutype(
     new_unchecked,
     validate(
-        len_char_min = USER_LOGIN_MIN_LEN,
-        len_char_max = USER_LOGIN_MAX_LEN,
-        regex = USER_LOGIN_REGEX,
+        len_char_min = UserLogin::LEN_CHAR_MIN,
+        len_char_max = UserLogin::LEN_CHAR_MAX,
+        regex = UserPassword::REGEX,
     ),
     derive(Debug, PartialEq, Eq, AsRef, Hash),
 )]
 pub struct UserLogin(String);
 
-pub const USER_PASSWORD_MIN_LEN: usize = 8;
-pub const USER_PASSWORD_MAX_LEN: usize = 64;
-pub static USER_PASSWORD_REGEX: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r#"^[a-zA-Z0-9~`!@#$%^&*()\-_+={}\[\]|\\;:"<>,./?]+$"#).unwrap());
 #[nutype(
     validate(
-        len_char_min = USER_PASSWORD_MIN_LEN,
-        len_char_max = USER_PASSWORD_MAX_LEN,
-        regex = USER_PASSWORD_REGEX,
+        len_char_min = UserPassword::LEN_CHAR_MIN,
+        len_char_max = UserPassword::LEN_CHAR_MAX,
+        regex = UserPassword::REGEX,
     ),
     derive(AsRef),
 )]
@@ -97,17 +87,19 @@ pub struct AuthTokens {
 #[allow(clippy::repeat_once)]
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
     fn user_display_name() {
         assert_eq!(
-            crate::UserDisplayName::try_new(""),
-            Err(crate::UserDisplayNameError::LenCharMinViolated),
+            UserDisplayName::try_new(""),
+            Err(UserDisplayNameError::LenCharMinViolated),
         );
-        assert!(crate::UserDisplayName::try_new("a".repeat(1)).is_ok());
-        assert!(crate::UserDisplayName::try_new("a".repeat(64)).is_ok());
+        assert!(UserDisplayName::try_new("a".repeat(1)).is_ok());
+        assert!(UserDisplayName::try_new("a".repeat(64)).is_ok());
         assert_eq!(
-            crate::UserDisplayName::try_new("a".repeat(65)),
-            Err(crate::UserDisplayNameError::LenCharMaxViolated),
+            UserDisplayName::try_new("a".repeat(65)),
+            Err(UserDisplayNameError::LenCharMaxViolated),
         );
     }
 }

@@ -6,6 +6,8 @@ import "google/protobuf/timestamp.proto";
 // Manages login sessions.
 service AuthService {
   rpc LogIn(AuthServiceLogInRequest) returns (AuthServiceLogInResponse);
+  rpc GetMyInfo(AuthServiceGetMyInfoRequest)
+      returns (AuthServiceGetMyInfoResponse);
   rpc RefreshSession(AuthServiceRefreshSessionRequest)
       returns (AuthServiceRefreshSessionResponse);
   rpc SignUp(AuthServiceSignUpRequest) returns (AuthServiceSignUpResponse);
@@ -55,6 +57,12 @@ service TagService {
   rpc Delete(TagServiceDeleteRequest) returns (TagServiceDeleteResponse);
   // Get relevant tag IDs for an event description.
   rpc Suggest(TagServiceSuggestRequest) returns (TagServiceSuggestResponse);
+}
+
+message AuthServiceGetMyInfoRequest {}
+
+message AuthServiceGetMyInfoResponse {
+  User user = 1;
 }
 
 message UserCredentials {
@@ -154,8 +162,8 @@ message TagServiceSuggestRequest {
 }
 
 message TagServiceSuggestResponse {
-  // A list of predicted tag IDs for a description.
-  repeated string tag_ids = 1;
+  // A list of predicted tags for a description.
+  repeated Tag tags = 1;
 }
 
 message EventServiceFindImageRequest {
