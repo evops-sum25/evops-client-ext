@@ -146,13 +146,13 @@ fn validate_tag_name(tag_name: &str) -> ValidateTagNameResult {
 }
 
 #[derive(uniffi::Enum)]
-enum ValidateUserNameResult {
+enum ValidateUserDisplayNameResult {
     Ok,
     LenCharMinViolated,
     LenCharMaxViolated,
 }
 #[uniffi::export]
-fn validate_user_display_name(user_name: &str) -> self::ValidateUserNameResult {
+fn validate_user_display_name(user_name: &str) -> self::ValidateUserDisplayNameResult {
     evops_models::UserDisplayName::try_new(user_name).into()
 }
 

@@ -1,4 +1,6 @@
-impl<T> From<Result<T, evops_models::UserDisplayNameError>> for crate::ValidateUserNameResult {
+impl<T> From<Result<T, evops_models::UserDisplayNameError>>
+    for crate::ValidateUserDisplayNameResult
+{
     fn from(value: Result<T, evops_models::UserDisplayNameError>) -> Self {
         match value {
             Ok(_) => Self::Ok,
