@@ -1,14 +1,52 @@
-impl<T> From<Result<T, evops_models::UserDisplayNameError>> for crate::ValidateUserNameResult {
+impl<T> From<Result<T, evops_models::UserDisplayNameError>>
+    for crate::ValidateUserDisplayNameResult
+{
     fn from(value: Result<T, evops_models::UserDisplayNameError>) -> Self {
-        use crate::validate_user_name_result::Result as B;
+        use crate::validate_user_display_name_result::Result as B;
         use evops_models::UserDisplayNameError as N;
 
         Self {
             result: Some(match value {
                 Ok(_) => B::Ok(()),
                 Err(e) => match e {
-                    N::LenCharMinViolated => B::NotEmptyViolated(()),
+                    N::LenCharMinViolated => B::LenCharMinViolated(()),
                     N::LenCharMaxViolated => B::LenCharMaxViolated(()),
+                },
+            }),
+        }
+    }
+}
+
+impl<T> From<Result<T, evops_models::UserLoginError>> for crate::ValidateUserLoginResult {
+    fn from(value: Result<T, evops_models::UserLoginError>) -> Self {
+        use crate::validate_user_login_result::Result as B;
+        use evops_models::UserLoginError as N;
+
+        Self {
+            result: Some(match value {
+                Ok(_) => B::Ok(()),
+                Err(e) => match e {
+                    N::LenCharMinViolated => B::LenCharMinViolated(()),
+                    N::LenCharMaxViolated => B::LenCharMaxViolated(()),
+                    N::RegexViolated => B::RegexViolated(()),
+                },
+            }),
+        }
+    }
+}
+
+impl<T> From<Result<T, evops_models::UserPasswordError>> for crate::ValidateUserPasswordResult {
+    fn from(value: Result<T, evops_models::UserPasswordError>) -> Self {
+        use crate::validate_user_password_result::Result as B;
+        use evops_models::UserPasswordError as N;
+
+        Self {
+            result: Some(match value {
+                Ok(_) => B::Ok(()),
+                Err(e) => match e {
+                    N::LenCharMinViolated => B::LenCharMinViolated(()),
+                    N::LenCharMaxViolated => B::LenCharMaxViolated(()),
+                    N::RegexViolated => B::RegexViolated(()),
                 },
             }),
         }
@@ -24,8 +62,8 @@ impl<T> From<Result<T, evops_models::EventTitleError>> for crate::ValidateEventT
             result: Some(match value {
                 Ok(_) => B::Ok(()),
                 Err(e) => match e {
+                    N::LenCharMinViolated => B::LenCharMinViolated(()),
                     N::LenCharMaxViolated => B::LenCharMaxViolated(()),
-                    N::NotEmptyViolated => B::NotEmptyViolated(()),
                 },
             }),
         }
@@ -43,8 +81,8 @@ impl<T> From<Result<T, evops_models::EventDescriptionError>>
             result: Some(match value {
                 Ok(_) => B::Ok(()),
                 Err(e) => match e {
+                    N::LenCharMinViolated => B::LenCharMinViolated(()),
                     N::LenCharMaxViolated => B::LenCharMaxViolated(()),
-                    N::NotEmptyViolated => B::NotEmptyViolated(()),
                 },
             }),
         }
@@ -60,8 +98,8 @@ impl<T> From<Result<T, evops_models::TagNameError>> for crate::ValidateTagNameRe
             result: Some(match value {
                 Ok(_) => B::Ok(()),
                 Err(e) => match e {
+                    N::LenCharMinViolated => B::LenCharMinViolated(()),
                     N::LenCharMaxViolated => B::LenCharMaxViolated(()),
-                    N::NotEmptyViolated => B::NotEmptyViolated(()),
                     N::RegexViolated => B::RegexViolated(()),
                 },
             }),
@@ -78,8 +116,8 @@ impl<T> From<Result<T, evops_models::TagAliasError>> for crate::ValidateTagAlias
             result: Some(match value {
                 Ok(_) => B::Ok(()),
                 Err(e) => match e {
+                    N::LenCharMinViolated => B::LenCharMinViolated(()),
                     N::LenCharMaxViolated => B::LenCharMaxViolated(()),
-                    N::NotEmptyViolated => B::NotEmptyViolated(()),
                 },
             }),
         }

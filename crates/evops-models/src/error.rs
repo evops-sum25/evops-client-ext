@@ -1,6 +1,6 @@
 use thiserror::Error;
 
-pub type ApiResult<T> = std::result::Result<T, crate::ApiError>;
+pub type ApiResult<T> = std::result::Result<T, ApiError>;
 
 #[derive(Debug, Error)]
 #[error("{0}")]
