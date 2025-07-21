@@ -32,6 +32,7 @@ pub struct UserId(Uuid);
 
 #[nutype(
     new_unchecked,
+    sanitize(trim),
     validate(
         len_char_min = UserDisplayName::LEN_CHAR_MIN,
         len_char_max = UserDisplayName::LEN_CHAR_MAX,
@@ -45,7 +46,7 @@ pub struct UserDisplayName(String);
     validate(
         len_char_min = UserLogin::LEN_CHAR_MIN,
         len_char_max = UserLogin::LEN_CHAR_MAX,
-        regex = UserPassword::REGEX,
+        regex = UserLogin::REGEX,
     ),
     derive(Debug, PartialEq, Eq, AsRef, Hash),
 )]

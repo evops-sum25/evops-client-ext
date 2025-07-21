@@ -62,6 +62,7 @@ pub struct EventId(Uuid);
 
 #[nutype(
     new_unchecked,
+    sanitize(trim),
     validate(len_char_min = EventTitle::LEN_CHAR_MIN, len_char_max = EventTitle::LEN_CHAR_MAX),
     derive(Debug, PartialEq, Eq, AsRef, Hash),
 )]
@@ -69,6 +70,7 @@ pub struct EventTitle(String);
 
 #[nutype(
     new_unchecked,
+    sanitize(trim),
     validate(
         len_char_min = EventDescription::LEN_CHAR_MIN,
         len_char_max = EventDescription::LEN_CHAR_MAX,

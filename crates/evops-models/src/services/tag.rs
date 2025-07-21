@@ -37,6 +37,7 @@ pub struct TagName(String);
 
 #[nutype(
     new_unchecked,
+    sanitize(trim),
     validate(len_char_min = TagAlias::LEN_CHAR_MIN, len_char_max = TagAlias::LEN_CHAR_MAX),
     derive(Debug, PartialEq, Eq, AsRef, Hash, Display),
 )]
